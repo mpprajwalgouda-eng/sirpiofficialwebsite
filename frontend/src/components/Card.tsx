@@ -51,7 +51,7 @@ const Card: React.FC<CardProps> = ({
       {/* Tag — top left */}
       {tag && (
         <div className="absolute top-5 left-5 z-10">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-white bg-[#1a5c5a]/80 backdrop-blur-sm px-3 py-1">
+          <span className="text-[10px] uppercase font-bold tracking-widest text-white bg-[#05325d]/80 backdrop-blur-sm px-3 py-1">
             {tag}
           </span>
         </div>
@@ -72,7 +72,7 @@ const Card: React.FC<CardProps> = ({
         )}
         {children}
         {link && (
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#7ecfcd] mt-3 group-hover:gap-2.5 transition-all">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#6eb4f7] mt-3 group-hover:gap-2.5 transition-all">
             Learn More <ArrowRight className="w-3.5 h-3.5" />
           </span>
         )}

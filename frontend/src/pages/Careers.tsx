@@ -88,7 +88,7 @@ const Careers: React.FC = () => {
     }
   };
 
-  const inputCls = 'w-full bg-white border border-[#c8c0aa] py-3 px-4 text-sm text-[#1a2e2c] focus:outline-none focus:border-[#1a5c5a] transition-colors placeholder:text-[#aaa]';
+  const inputCls = 'w-full bg-white border border-[#c8c0aa] py-3 px-4 text-sm text-[#021124] focus:outline-none focus:border-[#05325d] transition-colors placeholder:text-[#aaa]';
   const labelCls = 'text-[10px] uppercase font-bold text-[#777] tracking-wider block mb-1.5';
 
   return (
@@ -101,12 +101,12 @@ const Careers: React.FC = () => {
       <div className="bg-[#f5f0e8]">
 
         {/* ── PAGE HEADER ── */}
-        <section className="bg-[#1a2e2c] pt-32 pb-20 px-6 lg:px-12">
+        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Join Our Team</p>
+            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Join Our Team</p>
             <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
               Build the Core<br />
-              <span className="text-[#7ecfcd]">Infrastructure</span>
+              <span className="text-[#6eb4f7]">Infrastructure</span>
             </h1>
             <p className="text-slate-300 text-base leading-relaxed mt-6 max-w-xl">
               We look for developers and data scientists who enjoy mathematical puzzles, clean codebases, and building production-ready architectures.
@@ -119,8 +119,8 @@ const Careers: React.FC = () => {
           <div className="flex flex-col lg:flex-row gap-16">
             {/* Left: Culture text */}
             <div className="lg:w-1/3">
-              <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Work Culture</p>
-              <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] leading-tight mb-6">
+              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Work Culture</p>
+              <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] leading-tight mb-6">
                 Engineering-First<br />Environment
               </h2>
               <p className="text-[#555] text-sm leading-relaxed">
@@ -130,7 +130,7 @@ const Careers: React.FC = () => {
 
             {/* Right: Benefits — Suzlon image cards */}
             <div className="lg:w-2/3">
-              <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-6">Employee Benefits</p>
+              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-6">Employee Benefits</p>
               <div className="grid grid-cols-2 gap-1">
                 {benefits.map((b, i) => (
                   <Card
@@ -150,8 +150,8 @@ const Careers: React.FC = () => {
 
         {/* ── OPEN POSITIONS — Suzlon image cards ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
-          <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Open Roles</p>
-          <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] mb-12">Current Openings</h2>
+          <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Open Roles</p>
+          <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-12">Current Openings</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
             {openPositions.map((job, i) => (
@@ -175,7 +175,7 @@ const Careers: React.FC = () => {
                   </div>
                   <button
                     onClick={() => { setFormData(p => ({ ...p, position: job.title })); document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' }); }}
-                    className="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold text-[#1a5c5a] hover:gap-2.5 transition-all"
+                    className="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold text-[#05325d] hover:gap-2.5 transition-all"
                   >
                     Apply <ArrowRight className="w-3.5 h-3.5" />
                   </button>
@@ -188,8 +188,8 @@ const Careers: React.FC = () => {
         {/* ── APPLICATION FORM ── */}
         <section id="application-form" className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 scroll-mt-28">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Apply</p>
-            <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] mb-4">Join the Registry</h2>
+            <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Apply</p>
+            <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-4">Join the Registry</h2>
             <p className="text-[#555] text-sm mb-10">Complete the fields below and attach your CV. We review applications within 3 business days.</p>
 
             <div className="border border-[#c8c0aa] bg-white">
@@ -214,18 +214,18 @@ const Careers: React.FC = () => {
 
                 <div>
                   <label className={labelCls}>Upload Resume (PDF, DOC, DOCX) *</label>
-                  <div className="relative border border-dashed border-[#c8c0aa] p-8 hover:border-[#1a5c5a] transition-colors flex flex-col items-center justify-center bg-[#f5f0e8] cursor-pointer">
+                  <div className="relative border border-dashed border-[#c8c0aa] p-8 hover:border-[#05325d] transition-colors flex flex-col items-center justify-center bg-[#f5f0e8] cursor-pointer">
                     <input type="file" required onChange={handleFileChange} className="absolute inset-0 opacity-0 cursor-pointer" />
                     <Upload className="w-8 h-8 text-[#aaa] mb-2" />
-                    <span className="text-sm font-semibold text-[#1a2e2c]">{resumeFile ? resumeFile.name : 'Select or drag file here'}</span>
+                    <span className="text-sm font-semibold text-[#021124]">{resumeFile ? resumeFile.name : 'Select or drag file here'}</span>
                     <span className="text-xs text-[#777] mt-1">Max 5MB · PDF, DOC, DOCX</span>
                   </div>
                 </div>
 
                 {status !== 'idle' && (
                   <div className="p-4 border border-[#c8c0aa] flex items-center gap-3 text-xs leading-relaxed bg-[#f5f0e8]">
-                    {(status === 'uploading' || status === 'submitting') && <RefreshCw className="w-4 h-4 text-[#1a5c5a] animate-spin flex-shrink-0" />}
-                    {status === 'success' && <CheckCircle className="w-4 h-4 text-[#1a5c5a] flex-shrink-0" />}
+                    {(status === 'uploading' || status === 'submitting') && <RefreshCw className="w-4 h-4 text-[#05325d] animate-spin flex-shrink-0" />}
+                    {status === 'success' && <CheckCircle className="w-4 h-4 text-[#05325d] flex-shrink-0" />}
                     {status === 'error' && <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />}
                     <span className={status === 'error' ? 'text-red-500' : 'text-[#555]'}>{message}</span>
                   </div>
@@ -234,7 +234,7 @@ const Careers: React.FC = () => {
                 <button
                   type="submit"
                   disabled={status === 'uploading' || status === 'submitting'}
-                  className="w-full py-4 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                  className="w-full py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
                 >
                   Submit Application Profile
                 </button>

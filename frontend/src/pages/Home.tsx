@@ -40,7 +40,7 @@ const Counter: React.FC<{ value: number; suffix?: string; label: string }> = ({ 
 
   return (
     <div ref={ref} className="py-10 px-6 border-b border-[#c8c0aa]">
-      <div className="text-5xl sm:text-6xl font-bold text-[#1a5c5a] tracking-tight">
+      <div className="text-5xl sm:text-6xl font-bold text-[#05325d] tracking-tight">
         {count.toLocaleString()}{suffix}
       </div>
       <p className="text-[#555] text-sm mt-3 leading-snug max-w-[180px]">{label}</p>
@@ -71,42 +71,42 @@ const Home: React.FC = () => {
 
   const services = [
     {
-      icon: <Wind className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Wind className="w-8 h-8 text-[#05325d]" />,
       title: 'Wind Energy Analytics',
       description: 'Advanced wind resource assessment, turbine efficiency prediction, and spatial site optimisation tools built for the renewable energy sector.',
       slug: 'wind-energy',
       img: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop',
     },
     {
-      icon: <Globe className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Globe className="w-8 h-8 text-[#05325d]" />,
       title: 'Geospatial Engineering',
       description: 'Satellite imagery processing, GIS data structures, mapping APIs, and custom OGC-compliant map servers.',
       slug: 'geospatial-engineering',
       img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
     },
     {
-      icon: <Cpu className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Cpu className="w-8 h-8 text-[#05325d]" />,
       title: 'Artificial Intelligence',
       description: 'Custom NLP engines, computer vision algorithms, and generative AI systems engineered to scale in enterprise environments.',
       slug: 'artificial-intelligence',
       img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
     },
     {
-      icon: <Brain className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Brain className="w-8 h-8 text-[#05325d]" />,
       title: 'Machine Learning',
       description: 'Supervised and unsupervised predictive models for demand forecasting, classification, and complex operational optimisation.',
       slug: 'machine-learning',
       img: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=800&auto=format&fit=crop',
     },
     {
-      icon: <Database className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Database className="w-8 h-8 text-[#05325d]" />,
       title: 'Data Science',
       description: 'Enterprise analytics, data transformation pipelines, and visual dashboards for real-time business insight and decision support.',
       slug: 'data-science',
       img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
     },
     {
-      icon: <Terminal className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Terminal className="w-8 h-8 text-[#05325d]" />,
       title: 'Enterprise Software',
       description: 'Secure, cloud-native full-stack applications built with FastAPI, React, and microservices for large-scale industrial deployments.',
       slug: 'enterprise-development',
@@ -238,16 +238,16 @@ const Home: React.FC = () => {
 
           {/* Section header */}
           <div className="mb-12">
-            <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-3">
+            <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">
               What We Do
             </p>
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-              <h2 className="font-bold text-5xl sm:text-6xl text-[#1a2e2c] leading-tight max-w-xl">
+              <h2 className="font-bold text-5xl sm:text-6xl text-[#021124] leading-tight max-w-xl">
                 Our Offerings
               </h2>
               <Link
                 to="/services"
-                className="inline-flex items-center gap-2 text-[#1a5c5a] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 text-[#05325d] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
               >
                 View All Services <ArrowRight className="w-4 h-4" />
               </Link>
@@ -373,7 +373,7 @@ const Home: React.FC = () => {
                     <h3 className="font-bold text-2xl text-white leading-snug mb-1">{services[5].title}</h3>
                     <p className="text-white/80 text-sm leading-relaxed max-w-xl">{services[5].description}</p>
                   </div>
-                  <span className="flex-shrink-0 inline-flex items-center gap-2 text-xs font-semibold text-[#7ecfcd] ml-4">
+                  <span className="flex-shrink-0 inline-flex items-center gap-2 text-xs font-semibold text-[#6eb4f7] ml-4">
                     Learn More <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
@@ -399,13 +399,13 @@ const Home: React.FC = () => {
           <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm tracking-wide transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm tracking-wide transition-colors"
             >
               Explore Solutions <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 border border-[#1a5c5a] text-[#1a5c5a] font-semibold text-sm tracking-wide hover:bg-[#1a5c5a] hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-[#05325d] text-[#05325d] font-semibold text-sm tracking-wide hover:bg-[#05325d] hover:text-white transition-colors"
             >
               Contact Us
             </Link>
@@ -415,19 +415,19 @@ const Home: React.FC = () => {
         {/* ────────────────────────────────────────────────────
             PRODUCTS — WindVista showcase
         ──────────────────────────────────────────────────── */}
-        <section className="bg-[#1a2e2c] py-24">
+        <section className="bg-[#021124] py-24">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
             {/* Header */}
             <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
               <div>
-                <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Product Portfolio</p>
+                <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Product Portfolio</p>
                 <h2 className="font-bold text-4xl sm:text-5xl text-white leading-tight">
                   Proprietary Technologies<br />&amp; Platforms
                 </h2>
               </div>
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 text-[#7ecfcd] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 text-[#6eb4f7] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
               >
                 All Products <ArrowRight className="w-4 h-4" />
               </Link>
@@ -438,11 +438,11 @@ const Home: React.FC = () => {
               {products.filter(p => p.featured).map((p, i) => (
                 <div
                   key={i}
-                  className="group relative border border-white/10 p-8 sm:p-12 flex flex-col md:flex-row justify-between gap-8 hover:border-[#7ecfcd]/40 transition-colors"
+                  className="group relative border border-white/10 p-8 sm:p-12 flex flex-col md:flex-row justify-between gap-8 hover:border-[#6eb4f7]/40 transition-colors"
                 >
                   <div className="space-y-4 md:w-2/3">
                     <div className="flex gap-3 items-center">
-                      <span className="text-[10px] uppercase font-bold text-[#7ecfcd] tracking-widest border border-[#7ecfcd]/30 px-3 py-1">{p.tag}</span>
+                      <span className="text-[10px] uppercase font-bold text-[#6eb4f7] tracking-widest border border-[#6eb4f7]/30 px-3 py-1">{p.tag}</span>
                       <span className="text-[10px] uppercase font-bold text-[#f5c842] tracking-widest border border-[#f5c842]/30 px-3 py-1">Latest Version</span>
                     </div>
                     <h3 className="font-bold text-4xl sm:text-5xl text-white">{p.name}</h3>
@@ -451,7 +451,7 @@ const Home: React.FC = () => {
                   <div className="flex items-end">
                     <Link
                       to={`/products/${p.slug}`}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm transition-colors"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors"
                     >
                       View Details <ArrowRight className="w-4 h-4" />
                     </Link>
@@ -493,14 +493,14 @@ const Home: React.FC = () => {
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
             <div>
-              <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Vertical Solutions</p>
-              <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] leading-tight">
+              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Vertical Solutions</p>
+              <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] leading-tight">
                 Deep Domain<br />Expertise
               </h2>
             </div>
             <Link
               to="/industries"
-              className="inline-flex items-center gap-2 text-[#1a5c5a] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
+              className="inline-flex items-center gap-2 text-[#05325d] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
             >
               See All Industries <ArrowRight className="w-4 h-4" />
             </Link>
@@ -538,8 +538,8 @@ const Home: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
               {/* Left */}
               <div>
-                <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Operational Pipeline</p>
-                <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] leading-tight mb-8">
+                <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Operational Pipeline</p>
+                <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] leading-tight mb-8">
                   AI Innovation &amp;<br />Analytical Pipeline
                 </h2>
                 <p className="text-[#555] text-sm leading-relaxed mb-10">
@@ -558,17 +558,17 @@ const Home: React.FC = () => {
                         <span
                           className={`w-8 h-8 flex items-center justify-center text-xs font-bold transition-colors ${
                             activeWorkflow === idx
-                              ? 'bg-[#1a5c5a] text-white'
+                              ? 'bg-[#05325d] text-white'
                               : 'border border-[#c8c0aa] text-[#777]'
                           }`}
                         >
                           {String(idx + 1).padStart(2, '0')}
                         </span>
-                        <span className={`font-semibold text-base ${activeWorkflow === idx ? 'text-[#1a5c5a]' : 'text-[#1a2e2c]'}`}>
+                        <span className={`font-semibold text-base ${activeWorkflow === idx ? 'text-[#05325d]' : 'text-[#021124]'}`}>
                           {step.title}
                         </span>
                       </div>
-                      <ArrowRight className={`w-4 h-4 transition-all ${activeWorkflow === idx ? 'text-[#1a5c5a] translate-x-1' : 'text-[#c8c0aa]'}`} />
+                      <ArrowRight className={`w-4 h-4 transition-all ${activeWorkflow === idx ? 'text-[#05325d] translate-x-1' : 'text-[#c8c0aa]'}`} />
                     </button>
                   ))}
                 </div>
@@ -585,12 +585,12 @@ const Home: React.FC = () => {
                   className="bg-white p-10 flex flex-col justify-center items-center text-center min-h-[380px] border border-[#c8c0aa]"
                 >
                   <div className="w-20 h-20 bg-[#f5f0e8] border border-[#c8c0aa] flex items-center justify-center mb-8">
-                    {activeWorkflow === 0 && <Database className="w-10 h-10 text-[#1a5c5a]" />}
-                    {activeWorkflow === 1 && <Cpu className="w-10 h-10 text-[#1a5c5a]" />}
-                    {activeWorkflow === 2 && <BarChart2 className="w-10 h-10 text-[#1a5c5a]" />}
-                    {activeWorkflow === 3 && <CheckCircle className="w-10 h-10 text-[#1a5c5a]" />}
+                    {activeWorkflow === 0 && <Database className="w-10 h-10 text-[#05325d]" />}
+                    {activeWorkflow === 1 && <Cpu className="w-10 h-10 text-[#05325d]" />}
+                    {activeWorkflow === 2 && <BarChart2 className="w-10 h-10 text-[#05325d]" />}
+                    {activeWorkflow === 3 && <CheckCircle className="w-10 h-10 text-[#05325d]" />}
                   </div>
-                  <h4 className="font-bold text-2xl text-[#1a2e2c] mb-4">{workflowSteps[activeWorkflow].title}</h4>
+                  <h4 className="font-bold text-2xl text-[#021124] mb-4">{workflowSteps[activeWorkflow].title}</h4>
                   <p className="text-[#555] text-sm leading-relaxed max-w-xs">{workflowSteps[activeWorkflow].desc}</p>
 
                   {/* Step dots */}
@@ -598,7 +598,7 @@ const Home: React.FC = () => {
                     {workflowSteps.map((_, d) => (
                       <span
                         key={d}
-                        className={`h-1 rounded-full transition-all duration-300 ${activeWorkflow === d ? 'w-8 bg-[#1a5c5a]' : 'w-2 bg-[#c8c0aa]'}`}
+                        className={`h-1 rounded-full transition-all duration-300 ${activeWorkflow === d ? 'w-8 bg-[#05325d]' : 'w-2 bg-[#c8c0aa]'}`}
                       />
                     ))}
                   </div>
@@ -614,27 +614,27 @@ const Home: React.FC = () => {
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-t border-[#c8c0aa]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-[#c8c0aa]">
             {/* Image */}
-            <div className="relative bg-[#1a2e2c] flex items-center justify-center p-12 min-h-[400px]">
-              <div className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-[#7ecfcd]/30">
+            <div className="relative bg-[#021124] flex items-center justify-center p-12 min-h-[400px]">
+              <div className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-[#6eb4f7]/30">
                 <img src="/founder.jpeg" alt="Dr. Anand Lakshmanan" className="w-full h-full object-cover" />
               </div>
             </div>
 
             {/* Content */}
             <div className="p-10 sm:p-14 flex flex-col justify-center bg-white">
-              <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Leadership</p>
-              <h2 className="font-bold text-3xl sm:text-4xl text-[#1a2e2c] mb-6">Dr. Anand Lakshmanan</h2>
+              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Leadership</p>
+              <h2 className="font-bold text-3xl sm:text-4xl text-[#021124] mb-6">Dr. Anand Lakshmanan</h2>
               <p className="text-[#555] text-sm leading-relaxed mb-8">
                 Dr. Anand Lakshmanan has 27 years of experience in academia and industry, having designed experiments and analysed data across various domains. Most recently, he worked at Apple in Cupertino, California as an Antenna Design Engineer for 6 years, and holds 7 patents. He founded SIRPI on the belief that all professionals need to be data-savvy to make informed decisions.
               </p>
               <div className="grid grid-cols-2 gap-6 border-t border-[#e0d8cc] pt-6">
                 <div>
                   <p className="text-xs text-[#777] uppercase tracking-wider mb-1">Focus</p>
-                  <p className="text-sm font-semibold text-[#1a2e2c]">AI Algorithms &amp; Geospatial Engineering</p>
+                  <p className="text-sm font-semibold text-[#021124]">AI Algorithms &amp; Geospatial Engineering</p>
                 </div>
                 <div>
                   <p className="text-xs text-[#777] uppercase tracking-wider mb-1">Mission</p>
-                  <p className="text-sm font-semibold text-[#1a2e2c]">Trustworthy Decision Intelligence</p>
+                  <p className="text-sm font-semibold text-[#021124]">Trustworthy Decision Intelligence</p>
                 </div>
               </div>
             </div>
@@ -644,12 +644,12 @@ const Home: React.FC = () => {
         {/* ────────────────────────────────────────────────────
             TESTIMONIALS
         ──────────────────────────────────────────────────── */}
-        <section className="bg-[#1a2e2c] py-24">
+        <section className="bg-[#021124] py-24">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               {/* Label col */}
               <div className="lg:col-span-3">
-                <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Success Stories</p>
+                <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Success Stories</p>
                 <h2 className="font-bold text-3xl sm:text-4xl text-white leading-tight">Client Feedback</h2>
               </div>
 
@@ -667,7 +667,7 @@ const Home: React.FC = () => {
                       "{testimonials[activeTestimonial].quote}"
                     </p>
                     <div>
-                      <p className="font-bold text-[#7ecfcd] text-sm">{testimonials[activeTestimonial].author}</p>
+                      <p className="font-bold text-[#6eb4f7] text-sm">{testimonials[activeTestimonial].author}</p>
                       <p className="text-white/40 text-xs mt-0.5">{testimonials[activeTestimonial].role}</p>
                     </div>
                   </motion.div>
@@ -698,9 +698,9 @@ const Home: React.FC = () => {
         ──────────────────────────────────────────────────── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-28 border-t border-[#c8c0aa]">
           <div className="max-w-2xl">
-            <h2 className="font-bold text-5xl sm:text-6xl text-[#1a2e2c] leading-tight mb-6">
+            <h2 className="font-bold text-5xl sm:text-6xl text-[#021124] leading-tight mb-6">
               Ready to Transform<br />Your Data Into<br />
-              <span className="text-[#1a5c5a]">Decisions?</span>
+              <span className="text-[#05325d]">Decisions?</span>
             </h2>
             <p className="text-[#555] text-base leading-relaxed mb-10 max-w-lg">
               Speak directly with our engineering leaders. We specialise in tailoring custom AI, geospatial, and wind energy solutions for enterprise organisations.
@@ -708,13 +708,13 @@ const Home: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/contact?type=consultation"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm tracking-wide transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm tracking-wide transition-colors"
               >
                 Book a Consultation <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#1a5c5a] text-[#1a5c5a] font-semibold text-sm tracking-wide hover:bg-[#1a5c5a] hover:text-white transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#05325d] text-[#05325d] font-semibold text-sm tracking-wide hover:bg-[#05325d] hover:text-white transition-colors"
               >
                 Contact Team
               </Link>

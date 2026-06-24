@@ -76,12 +76,12 @@ const Research: React.FC = () => {
       <div className="bg-[#f5f0e8]">
 
         {/* ── PAGE HEADER ── */}
-        <section className="bg-[#1a2e2c] pt-32 pb-20 px-6 lg:px-12">
+        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Scientific Discovery</p>
+            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Scientific Discovery</p>
             <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
               Research &<br />
-              <span className="text-[#7ecfcd]">Innovation Labs</span>
+              <span className="text-[#6eb4f7]">Innovation Labs</span>
             </h1>
             <p className="text-slate-300 text-base leading-relaxed mt-6 max-w-xl">
               We treat software engineering as an exact science. Our research engineers publish papers and file patents to advance GIS, wind power modelling, and secure corporate AI.
@@ -91,8 +91,8 @@ const Research: React.FC = () => {
 
         {/* ── FOCUS AREAS — Suzlon image cards ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
-          <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Research Focus</p>
-          <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] mb-12">Areas of Investigation</h2>
+          <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Research Focus</p>
+          <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-12">Areas of Investigation</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
             {focusAreas.map((area, i) => (
               <Card
@@ -111,19 +111,19 @@ const Research: React.FC = () => {
 
         {/* ── PUBLICATIONS ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
-          <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Academic Output</p>
-          <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] mb-12">Publications</h2>
+          <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Academic Output</p>
+          <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-12">Publications</h2>
 
           <div className="border border-[#c8c0aa] divide-y divide-[#c8c0aa]">
             {publications.map((pub, i) => (
               <div key={i} className="bg-white hover:bg-[#f5f0e8] transition-colors">
                 <div className="p-8 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h3 className="font-bold text-base sm:text-lg text-[#1a2e2c] mb-1">{pub.title}</h3>
-                    <p className="text-[#1a5c5a] text-xs font-semibold mb-4">{pub.journal}</p>
+                    <h3 className="font-bold text-base sm:text-lg text-[#021124] mb-1">{pub.title}</h3>
+                    <p className="text-[#05325d] text-xs font-semibold mb-4">{pub.journal}</p>
                     <button
                       onClick={() => setSelectedPaper(selectedPaper === i ? null : i)}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#555] hover:text-[#1a5c5a] transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#555] hover:text-[#05325d] transition-colors"
                     >
                       <Eye className="w-4 h-4" />
                       {selectedPaper === i ? 'Hide Abstract' : 'Read Abstract'}
@@ -134,7 +134,7 @@ const Research: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  <span className="text-[10px] uppercase font-bold text-[#1a5c5a] tracking-widest border border-[#1a5c5a]/30 px-3 py-1 h-fit">{pub.year}</span>
+                  <span className="text-[10px] uppercase font-bold text-[#05325d] tracking-widest border border-[#05325d]/30 px-3 py-1 h-fit">{pub.year}</span>
                 </div>
               </div>
             ))}
@@ -145,8 +145,8 @@ const Research: React.FC = () => {
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              <p className="text-[#1a5c5a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Intellectual Property</p>
-              <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] mb-6">Proprietary Patents & Algorithms</h2>
+              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Intellectual Property</p>
+              <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-6">Proprietary Patents & Algorithms</h2>
               <p className="text-[#555] text-sm leading-relaxed">
                 Our core models and database handlers are legally registered as protected intellectual property. This protects our corporate clients from copyright issues and verifies that our systems are unique, novel, and engineered in-house.
               </p>
@@ -178,14 +178,14 @@ const Research: React.FC = () => {
 
         {/* ── CTA ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24">
-          <h2 className="font-bold text-4xl sm:text-5xl text-[#1a2e2c] mb-6">
-            Interested in collaborating on <span className="text-[#1a5c5a]">research?</span>
+          <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-6">
+            Interested in collaborating on <span className="text-[#05325d]">research?</span>
           </h2>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm transition-colors">
+            <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors">
               Contact Research Team <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link to="/careers" className="inline-flex items-center gap-2 px-8 py-4 border border-[#1a5c5a] text-[#1a5c5a] font-semibold text-sm hover:bg-[#1a5c5a] hover:text-white transition-colors">
+            <Link to="/careers" className="inline-flex items-center gap-2 px-8 py-4 border border-[#05325d] text-[#05325d] font-semibold text-sm hover:bg-[#05325d] hover:text-white transition-colors">
               Join as a Researcher
             </Link>
           </div>
