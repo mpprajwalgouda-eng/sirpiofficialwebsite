@@ -66,12 +66,12 @@ const Industries: React.FC = () => {
       <div className="bg-[#f5f0e8]">
 
         {/* ── PAGE HEADER ── */}
-        <section className="bg-[#1a2e2c] pt-32 pb-20 px-6 lg:px-12">
+        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Target Sectors</p>
+            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Target Sectors</p>
             <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
               Industry Vertical<br />
-              <span className="text-[#7ecfcd]">Impact</span>
+              <span className="text-[#6eb4f7]">Impact</span>
             </h1>
             <p className="text-slate-300 text-base leading-relaxed mt-6 max-w-xl">
               We apply our custom ML engines, OGC servers, and forecasting models to address specialised problems for complex industries.
@@ -96,14 +96,14 @@ const Industries: React.FC = () => {
                 />
 
                 {/* Detail panel beneath the card */}
-                <div className="bg-white border-l-4 border-[#1a5c5a]">
+                <div className="bg-white border-l-4 border-[#05325d]">
                   <div className="px-6 py-5 space-y-3 border-b border-[#eee]">
                     <div>
                       <p className="text-[10px] uppercase font-bold text-red-500 tracking-widest mb-1">The Challenge</p>
                       <p className="text-[#555] text-sm leading-relaxed">{ind.challenge}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] uppercase font-bold text-[#1a5c5a] tracking-widest mb-1">Our Solution</p>
+                      <p className="text-[10px] uppercase font-bold text-[#05325d] tracking-widest mb-1">Our Solution</p>
                       <p className="text-[#555] text-sm leading-relaxed">{ind.solution}</p>
                     </div>
                   </div>
@@ -114,7 +114,7 @@ const Industries: React.FC = () => {
         </section>
 
         {/* ── CTA ── */}
-        <section className="bg-[#1a2e2c] py-20">
+        <section className="bg-[#021124] py-20">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
             <h2 className="font-bold text-4xl sm:text-5xl text-white mb-6">
               Is your industry listed?
@@ -123,7 +123,7 @@ const Industries: React.FC = () => {
               If you don't see your sector above, we still have the data science and engineering toolkit to help you. Reach out and let's explore together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm transition-colors">
+              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors">
                 Talk to an Engineer <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/services" className="inline-flex items-center gap-2 px-8 py-4 border border-white/30 text-white font-semibold text-sm hover:bg-white/10 transition-colors">

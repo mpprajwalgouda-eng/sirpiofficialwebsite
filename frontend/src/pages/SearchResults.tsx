@@ -19,11 +19,11 @@ const SearchResults: React.FC = () => {
 
   const getCategoryIcon = (category: string) => {
     switch (category.toLowerCase()) {
-      case 'product':  return <Package   className="w-5 h-5 text-[#1a5c5a]" />;
-      case 'service':  return <Server    className="w-5 h-5 text-[#1a5c5a]" />;
-      case 'industry': return <Building  className="w-5 h-5 text-[#1a5c5a]" />;
-      case 'research': return <Microscope className="w-5 h-5 text-[#1a5c5a]" />;
-      case 'career':   return <Briefcase className="w-5 h-5 text-[#1a5c5a]" />;
+      case 'product':  return <Package   className="w-5 h-5 text-[#05325d]" />;
+      case 'service':  return <Server    className="w-5 h-5 text-[#05325d]" />;
+      case 'industry': return <Building  className="w-5 h-5 text-[#05325d]" />;
+      case 'research': return <Microscope className="w-5 h-5 text-[#05325d]" />;
+      case 'career':   return <Briefcase className="w-5 h-5 text-[#05325d]" />;
       default:         return <Search    className="w-5 h-5 text-[#777]" />;
     }
   };
@@ -38,11 +38,11 @@ const SearchResults: React.FC = () => {
       <div className="bg-[#f5f0e8] min-h-screen">
 
         {/* ── HEADER ── */}
-        <section className="bg-[#1a2e2c] pt-32 pb-16 px-6 lg:px-12">
+        <section className="bg-[#021124] pt-32 pb-16 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Search Output</p>
+            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Search Output</p>
             <h1 className="font-bold text-4xl sm:text-5xl text-white">
-              Results for <span className="text-[#7ecfcd]">"{query}"</span>
+              Results for <span className="text-[#6eb4f7]">"{query}"</span>
             </h1>
             <p className="text-slate-400 text-sm mt-3">
               Found {results.length} match{results.length !== 1 && 'es'} across our platform.
@@ -61,18 +61,18 @@ const SearchResults: React.FC = () => {
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] uppercase font-bold tracking-widest text-[#1a5c5a] border border-[#1a5c5a]/30 px-3 py-0.5">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-[#05325d] border border-[#05325d]/30 px-3 py-0.5">
                         {item.category}
                       </span>
                       {getCategoryIcon(item.category)}
                     </div>
-                    <h3 className="font-bold text-xl text-[#1a2e2c] mb-2 group-hover:text-[#1a5c5a] transition-colors">{item.title}</h3>
+                    <h3 className="font-bold text-xl text-[#021124] mb-2 group-hover:text-[#05325d] transition-colors">{item.title}</h3>
                     <p className="text-[#555] text-sm leading-relaxed line-clamp-3">{item.description}</p>
                   </div>
                   <div className="pt-4 mt-4 border-t border-[#c8c0aa]">
                     <Link
                       to={item.path}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1a5c5a] hover:gap-2.5 transition-all"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#05325d] hover:gap-2.5 transition-all"
                     >
                       View Details <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
@@ -86,13 +86,13 @@ const SearchResults: React.FC = () => {
               <div className="w-20 h-20 border border-[#c8c0aa] bg-white flex items-center justify-center mb-8">
                 <Search className="w-10 h-10 text-[#c8c0aa]" />
               </div>
-              <h2 className="font-bold text-2xl text-[#1a2e2c] mb-3">No results found</h2>
+              <h2 className="font-bold text-2xl text-[#021124] mb-3">No results found</h2>
               <p className="text-[#555] text-sm leading-relaxed mb-8">
                 We couldn't find any exact matches for "{query}". Try checking your spelling or using more general terms.
               </p>
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors"
               >
                 Browse All Products <ArrowRight className="w-4 h-4" />
               </Link>

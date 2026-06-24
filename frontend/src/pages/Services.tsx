@@ -37,7 +37,7 @@ const Services: React.FC = () => {
   const serviceList: ServiceDetail[] = [
     {
       id: 'artificial-intelligence',
-      icon: <Cpu className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Cpu className="w-8 h-8 text-[#05325d]" />,
       title: 'Artificial Intelligence',
       subtitle: 'Custom Generative AI and Intelligent Agent Frameworks',
       description: 'We design and deliver robust AI workflows, custom large language model pipelines, and intelligent retrieval-augmented generation systems suited for private secure deployment.',
@@ -49,7 +49,7 @@ const Services: React.FC = () => {
     },
     {
       id: 'machine-learning',
-      icon: <Brain className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Brain className="w-8 h-8 text-[#05325d]" />,
       title: 'Machine Learning',
       subtitle: 'Predictive Analytics & Classification Infrastructures',
       description: 'We deploy statistical algorithms that analyse chronological patterns to predict upcoming system vulnerabilities, sales demand, or anomalous spikes.',
@@ -61,7 +61,7 @@ const Services: React.FC = () => {
     },
     {
       id: 'data-science',
-      icon: <Database className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Database className="w-8 h-8 text-[#05325d]" />,
       title: 'Data Science',
       subtitle: 'Enterprise Data Mining, Cleaning, and Aggregation',
       description: 'We restructure chaotic database stores and build high-frequency cleaning scripts to ensure your data is accessible, organised, and optimised for reporting.',
@@ -73,7 +73,7 @@ const Services: React.FC = () => {
     },
     {
       id: 'geospatial-engineering',
-      icon: <Globe className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Globe className="w-8 h-8 text-[#05325d]" />,
       title: 'Geospatial Engineering',
       subtitle: 'GIS Servers, Custom Tiling, and Satellite Data Analytics',
       description: 'We build compliance-validated spatial server environments that process shapefiles, raster maps, and LiDAR layers to render interactive maps at lightning speed.',
@@ -85,7 +85,7 @@ const Services: React.FC = () => {
     },
     {
       id: 'wind-energy',
-      icon: <Wind className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Wind className="w-8 h-8 text-[#05325d]" />,
       title: 'Wind Energy Solutions',
       subtitle: 'Wind Resource Assessment & Farm Performance Optimisation',
       description: 'We deliver physics-backed predictive analytics for renewable energy systems, estimating weather patterns, wake losses, and turbine power outputs.',
@@ -97,7 +97,7 @@ const Services: React.FC = () => {
     },
     {
       id: 'enterprise-development',
-      icon: <Terminal className="w-8 h-8 text-[#1a5c5a]" />,
+      icon: <Terminal className="w-8 h-8 text-[#05325d]" />,
       title: 'Enterprise Software Development',
       subtitle: 'Highly Concurrent APIs and Secure Web Dashboards',
       description: 'We build high-capacity backends and responsive React applications capable of executing intensive database operations under heavy load.',
@@ -119,12 +119,12 @@ const Services: React.FC = () => {
       <div className="bg-[#f5f0e8]">
 
         {/* ── PAGE HEADER ── */}
-        <section className="bg-[#1a2e2c] pt-32 pb-20 px-6 lg:px-12">
+        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Services &amp; Capabilities</p>
+            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Services &amp; Capabilities</p>
             <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
               Enterprise Technical<br />
-              <span className="text-[#7ecfcd]">Competencies</span>
+              <span className="text-[#6eb4f7]">Competencies</span>
             </h1>
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed mt-6 max-w-2xl">
               We focus on solving hard engineering challenges. Here is a breakdown of our technical services, including features, benefits, and real-world outcomes.
@@ -140,7 +140,7 @@ const Services: React.FC = () => {
                 <a
                   key={s.id}
                   href={`#${s.id}`}
-                  className="whitespace-nowrap px-5 py-4 text-xs font-semibold text-[#555] hover:text-[#1a5c5a] hover:bg-[#f5f0e8] border-r border-[#c8c0aa] transition-colors"
+                  className="whitespace-nowrap px-5 py-4 text-xs font-semibold text-[#555] hover:text-[#05325d] hover:bg-[#f5f0e8] border-r border-[#c8c0aa] transition-colors"
                 >
                   {s.title}
                 </a>
@@ -162,8 +162,8 @@ const Services: React.FC = () => {
                 <div className="flex items-center gap-4">
                   <div className="p-3 border border-[#c8c0aa] bg-white">{service.icon}</div>
                   <div>
-                    <h2 className="font-bold text-2xl sm:text-3xl text-[#1a2e2c]">{service.title}</h2>
-                    <p className="text-[#1a5c5a] text-xs font-semibold mt-0.5">{service.subtitle}</p>
+                    <h2 className="font-bold text-2xl sm:text-3xl text-[#021124]">{service.title}</h2>
+                    <p className="text-[#05325d] text-xs font-semibold mt-0.5">{service.subtitle}</p>
                   </div>
                 </div>
 
@@ -171,22 +171,22 @@ const Services: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-2">
                   <div>
-                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-[#1a2e2c] mb-3">Capabilities</h4>
+                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-[#021124] mb-3">Capabilities</h4>
                     <ul className="space-y-2">
                       {service.features.map((feat, fi) => (
                         <li key={fi} className="flex items-start gap-2 text-xs text-[#555]">
-                          <CheckCircle2 className="w-4 h-4 text-[#1a5c5a] flex-shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-[#05325d] flex-shrink-0 mt-0.5" />
                           {feat}
                         </li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-[#1a2e2c] mb-3">Business Impact</h4>
+                    <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-[#021124] mb-3">Business Impact</h4>
                     <ul className="space-y-2">
                       {service.benefits.map((ben, bi) => (
                         <li key={bi} className="flex items-start gap-2 text-xs text-[#555]">
-                          <CheckCircle2 className="w-4 h-4 text-[#1a5c5a] flex-shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-[#05325d] flex-shrink-0 mt-0.5" />
                           {ben}
                         </li>
                       ))}
@@ -222,9 +222,9 @@ const Services: React.FC = () => {
                 <div className="bg-white border border-t-0 border-[#c8c0aa] flex-1">
                   <div className="p-6 sm:p-8 space-y-6">
                     {[
-                      { label: 'Challenge', text: service.caseStudy.challenge, color: 'text-[#1a2e2c]' },
-                      { label: 'Solution', text: service.caseStudy.solution, color: 'text-[#1a2e2c]' },
-                      { label: 'Outcome', text: service.caseStudy.outcome, color: 'text-[#1a5c5a]' },
+                      { label: 'Challenge', text: service.caseStudy.challenge, color: 'text-[#021124]' },
+                      { label: 'Solution', text: service.caseStudy.solution, color: 'text-[#021124]' },
+                      { label: 'Outcome', text: service.caseStudy.outcome, color: 'text-[#05325d]' },
                     ].map((item) => (
                       <div key={item.label}>
                         <h4 className={`text-xs font-bold uppercase tracking-wider ${item.color} mb-1`}>{item.label}</h4>
@@ -239,13 +239,13 @@ const Services: React.FC = () => {
         </div>
 
         {/* ── CTA ── */}
-        <section className="bg-[#1a2e2c] py-20">
+        <section className="bg-[#021124] py-20">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
             <h2 className="font-bold text-4xl sm:text-5xl text-white mb-6">
               Ready to get started?
             </h2>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact?type=consultation" className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a5c5a] hover:bg-[#134644] text-white font-semibold text-sm transition-colors">
+              <Link to="/contact?type=consultation" className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors">
                 Book Consultation <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 border border-white/30 text-white font-semibold text-sm hover:bg-white/10 transition-colors">

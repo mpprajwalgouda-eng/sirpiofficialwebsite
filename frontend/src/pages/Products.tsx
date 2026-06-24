@@ -67,12 +67,12 @@ const Products: React.FC = () => {
       <div className="bg-[#f5f0e8]">
 
         {/* ── PAGE HEADER ── */}
-        <section className="bg-[#1a2e2c] pt-32 pb-20 px-6 lg:px-12">
+        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#7ecfcd] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Product Matrix</p>
+            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Product Matrix</p>
             <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
               Proprietary<br />
-              <span className="text-[#7ecfcd]">Solutions</span>
+              <span className="text-[#6eb4f7]">Solutions</span>
             </h1>
             <p className="text-slate-300 text-base leading-relaxed mt-6 max-w-xl">
               We compile our scientific findings and software routines into highly optimised, deployment-ready enterprise platforms.
@@ -91,8 +91,8 @@ const Products: React.FC = () => {
                   onClick={() => setActiveCategory(cat)}
                   className={`whitespace-nowrap px-5 py-4 text-xs font-semibold border-r border-[#c8c0aa] transition-colors ${
                     activeCategory === cat
-                      ? 'bg-[#1a5c5a] text-white'
-                      : 'text-[#555] hover:text-[#1a5c5a] hover:bg-[#f5f0e8]'
+                      ? 'bg-[#05325d] text-white'
+                      : 'text-[#555] hover:text-[#05325d] hover:bg-[#f5f0e8]'
                   }`}
                 >
                   {cat}
