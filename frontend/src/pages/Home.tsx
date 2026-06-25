@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight, Cpu, Brain, Database, Globe, Wind, Terminal,
-  CheckCircle, ChevronLeft, ChevronRight, Volume2, VolumeX,
+  CheckCircle, Volume2, VolumeX,
   MapPin, BarChart2, Layers
 } from 'lucide-react';
 import SEO from '../components/SEO';
@@ -53,7 +53,7 @@ const Counter: React.FC<{ value: number; suffix?: string; label: string }> = ({ 
 ───────────────────────────────────────────────────────────── */
 const Home: React.FC = () => {
   const [muted, setMuted] = useState(true);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+
   const [activeWorkflow, setActiveWorkflow] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -144,23 +144,7 @@ const Home: React.FC = () => {
     { title: 'Decision Intelligence', desc: 'Presenting actionable insights to stakeholders via secure, auditable enterprise portals.' },
   ];
 
-  const testimonials = [
-    {
-      quote: 'SIRPI Technologies revolutionised our wind resource assessment timeline. What used to take weeks is now computed in hours with WindVista. The ROI was immediate.',
-      author: 'Dr. Marcus Vance',
-      role: 'VP of Engineering, WindCorp Global',
-    },
-    {
-      quote: 'The OGC Server built by SIRPI is incredibly fast. We serve millions of mapping coordinates daily to regional government portals without a single second of downtime.',
-      author: 'Clara Tan',
-      role: 'Director of GIS, Urban Planning Board',
-    },
-    {
-      quote: 'Their AI Upskilling Academy completely upgraded our team\'s capabilities. Best corporate training investment we have ever made.',
-      author: 'Sarah Jenkins',
-      role: 'Chief Technology Officer, Automation Labs',
-    },
-  ];
+
 
   return (
     <>
@@ -189,7 +173,7 @@ const Home: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover"
           poster="https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop"
         >
-          <source src="https://cdn.pixabay.com/video/2019/11/10/28873-372990647_large.mp4" type="video/mp4" />
+          <source src="/hero-bg-video.mp4" type="video/mp4" />
         </video>
 
         {/* Very light overlay so video breathes */}
@@ -197,7 +181,7 @@ const Home: React.FC = () => {
 
         {/* Text Overlay */}
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -389,10 +373,10 @@ const Home: React.FC = () => {
         ──────────────────────────────────────────────────── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-16 border-t border-[#c8c0aa]">
           <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-[#c8c0aa]">
-            <Counter value={20}  suffix="+"  label="Projects delivered across wind energy, AI, and geospatial domains" />
-            <Counter value={10}  suffix="+"  label="Clients served across energy, government, and enterprise sectors" />
-            <Counter value={5}   suffix="+"  label="Industry sectors covered with domain-specific AI solutions" />
-            <Counter value={7}         label="Patents held by our founding technical leadership" />
+            <Counter value={20} suffix="+" label="Projects delivered across wind energy, AI, and geospatial domains" />
+            <Counter value={10} suffix="+" label="Clients served across energy, government, and enterprise sectors" />
+            <Counter value={5} suffix="+" label="Industry sectors covered with domain-specific AI solutions" />
+            <Counter value={7} label="Patents held by our founding technical leadership" />
           </div>
 
           {/* CTA row below stats */}
@@ -550,17 +534,15 @@ const Home: React.FC = () => {
                     <button
                       key={idx}
                       onClick={() => setActiveWorkflow(idx)}
-                      className={`w-full text-left py-5 flex items-center justify-between group transition-colors ${
-                        activeWorkflow === idx ? 'bg-transparent' : 'hover:bg-[#f5f0e8]'
-                      }`}
+                      className={`w-full text-left py-5 flex items-center justify-between group transition-colors ${activeWorkflow === idx ? 'bg-transparent' : 'hover:bg-[#f5f0e8]'
+                        }`}
                     >
                       <div className="flex items-center gap-4">
                         <span
-                          className={`w-8 h-8 flex items-center justify-center text-xs font-bold transition-colors ${
-                            activeWorkflow === idx
-                              ? 'bg-[#05325d] text-white'
-                              : 'border border-[#c8c0aa] text-[#777]'
-                          }`}
+                          className={`w-8 h-8 flex items-center justify-center text-xs font-bold transition-colors ${activeWorkflow === idx
+                            ? 'bg-[#05325d] text-white'
+                            : 'border border-[#c8c0aa] text-[#777]'
+                            }`}
                         >
                           {String(idx + 1).padStart(2, '0')}
                         </span>
@@ -623,7 +605,8 @@ const Home: React.FC = () => {
             {/* Content */}
             <div className="p-10 sm:p-14 flex flex-col justify-center bg-white">
               <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Leadership</p>
-              <h2 className="font-bold text-3xl sm:text-4xl text-[#021124] mb-6">Dr. Anand Lakshmanan</h2>
+              <h2 className="font-bold text-3xl sm:text-4xl text-[#021124] mb-2">Dr. Anand Lakshmanan</h2>
+              <p className="text-[#05325d] text-sm font-semibold tracking-wide mb-6">Founder &amp; CEO</p>
               <p className="text-[#555] text-sm leading-relaxed mb-8">
                 Dr. Anand Lakshmanan has 27 years of experience in academia and industry, having designed experiments and analysed data across various domains. Most recently, he worked at Apple in Cupertino, California as an Antenna Design Engineer for 6 years, and holds 7 patents. He founded SIRPI on the belief that all professionals need to be data-savvy to make informed decisions.
               </p>
@@ -641,83 +624,36 @@ const Home: React.FC = () => {
           </div>
         </section>
 
+
+
         {/* ────────────────────────────────────────────────────
-            TESTIMONIALS
+            FINAL CTA — dark navy (matches Product Portfolio)
         ──────────────────────────────────────────────────── */}
-        <section className="bg-[#021124] py-24">
+        <section className="bg-[#021124] py-28">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              {/* Label col */}
-              <div className="lg:col-span-3">
-                <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Success Stories</p>
-                <h2 className="font-bold text-3xl sm:text-4xl text-white leading-tight">Client Feedback</h2>
+            <div className="max-w-2xl">
+              <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Get Started</p>
+              <h2 className="font-bold text-5xl sm:text-6xl text-white leading-tight mb-6">
+                Ready to Transform<br />Your Data Into<br />
+                <span className="text-[#6eb4f7]">Decisions?</span>
+              </h2>
+              <p className="text-slate-400 text-base leading-relaxed mb-10 max-w-lg">
+                Speak directly with our engineering leaders. We specialise in tailoring custom AI, geospatial, and wind energy solutions for enterprise organisations.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  to="/contact?type=consultation"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm tracking-wide transition-colors"
+                >
+                  Book a Consultation <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/30 text-white font-semibold text-sm tracking-wide hover:bg-white/10 transition-colors"
+                >
+                  Contact Team
+                </Link>
               </div>
-
-              {/* Quote col */}
-              <div className="lg:col-span-7 lg:col-start-4">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeTestimonial}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.35 }}
-                  >
-                    <p className="text-white/80 text-lg sm:text-xl leading-relaxed italic mb-8">
-                      "{testimonials[activeTestimonial].quote}"
-                    </p>
-                    <div>
-                      <p className="font-bold text-[#6eb4f7] text-sm">{testimonials[activeTestimonial].author}</p>
-                      <p className="text-white/40 text-xs mt-0.5">{testimonials[activeTestimonial].role}</p>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Controls */}
-                <div className="flex gap-3 mt-10">
-                  <button
-                    onClick={() => setActiveTestimonial(p => (p - 1 + testimonials.length) % testimonials.length)}
-                    className="w-10 h-10 border border-white/20 text-white hover:bg-white/10 flex items-center justify-center transition-colors"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setActiveTestimonial(p => (p + 1) % testimonials.length)}
-                    className="w-10 h-10 border border-white/20 text-white hover:bg-white/10 flex items-center justify-center transition-colors"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ────────────────────────────────────────────────────
-            FINAL CTA — "Your good energy..." (Suzlon Careers style)
-        ──────────────────────────────────────────────────── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-28 border-t border-[#c8c0aa]">
-          <div className="max-w-2xl">
-            <h2 className="font-bold text-5xl sm:text-6xl text-[#021124] leading-tight mb-6">
-              Ready to Transform<br />Your Data Into<br />
-              <span className="text-[#05325d]">Decisions?</span>
-            </h2>
-            <p className="text-[#555] text-base leading-relaxed mb-10 max-w-lg">
-              Speak directly with our engineering leaders. We specialise in tailoring custom AI, geospatial, and wind energy solutions for enterprise organisations.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                to="/contact?type=consultation"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm tracking-wide transition-colors"
-              >
-                Book a Consultation <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#05325d] text-[#05325d] font-semibold text-sm tracking-wide hover:bg-[#05325d] hover:text-white transition-colors"
-              >
-                Contact Team
-              </Link>
             </div>
           </div>
         </section>
