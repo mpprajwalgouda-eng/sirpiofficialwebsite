@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { Cpu, Brain, Database, Globe, Wind, Terminal, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Cpu, Brain, Database, Globe, Wind, Terminal, CheckCircle2, ArrowRight, Cloud, Rocket, Map, Eye, MessageSquare, LineChart } from 'lucide-react';
 import SEO from '../components/SEO';
 import Card from '../components/Card';
 
@@ -24,6 +24,38 @@ interface ServiceDetail {
 
 const Services: React.FC = () => {
   const location = useLocation();
+  const [activeSection, setActiveSection] = useState<string>('');
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll active tab into view
+  useEffect(() => {
+    if (activeSection && scrollContainerRef.current) {
+      const activeTab = document.getElementById(`nav-tab-${activeSection}`);
+      const container = scrollContainerRef.current;
+      if (activeTab && container) {
+        // Calculate the scroll position to center the active tab
+        const scrollLeft = activeTab.offsetLeft - (container.offsetWidth / 2) + (activeTab.offsetWidth / 2);
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      }
+    }
+  }, [activeSection]);
+
+  // Sync nav visibility with main Navbar
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+        setIsNavVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsNavVisible(true);
+      }
+      lastScrollY = currentScrollY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (location.hash) {
@@ -62,9 +94,9 @@ const Services: React.FC = () => {
     {
       id: 'data-science',
       icon: <Database className="w-8 h-8 text-[#05325d]" />,
-      title: 'Data Science',
+      title: 'Data Science & Analytics',
       subtitle: 'Enterprise Data Mining, Cleaning, and Aggregation',
-      description: 'We restructure chaotic database stores and build high-frequency cleaning scripts to ensure your data is accessible, organised, and optimised for reporting.',
+      description: 'We restructure chaotic database stores and build high-frequency custom data pipelines, including scalable authentication, catalogue, and visualisation servers.',
       img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
       features: ['Data cleansing and batch ETL pipelines', 'Business metrics visualisation panels', 'Statistical correlation and pattern reporting', 'Massive dataset compression formats'],
       benefits: ['Establishment of a single source of truth across operations', 'Improved accuracy in executive reports', 'Rapid querying of legacy warehouse data', 'Actionable correlations highlighted automatically'],
@@ -72,15 +104,15 @@ const Services: React.FC = () => {
       caseStudy: { client: 'National Retail Network', challenge: 'Dispersed transaction databases leading to slow, inconsistent financial reporting across 200 stores.', solution: 'Constructed an automated Apache Spark pipeline that cleanses, joins, and aggregates transaction logs nightly.', outcome: 'Unified operations dashboards generated automatically by 5 AM, saving 120 analyst hours weekly.' },
     },
     {
-      id: 'geospatial-engineering',
+      id: 'geospatial-intelligence',
       icon: <Globe className="w-8 h-8 text-[#05325d]" />,
-      title: 'Geospatial Engineering',
-      subtitle: 'GIS Servers, Custom Tiling, and Satellite Data Analytics',
-      description: 'We build compliance-validated spatial server environments that process shapefiles, raster maps, and LiDAR layers to render interactive maps at lightning speed.',
+      title: 'Geospatial Intelligence',
+      subtitle: 'AI-Powered Geospatial Hosting and Analytics',
+      description: 'We build compliance-validated spatial server environments that process shapefiles and raster maps, delivering AI-powered geospatial data hosting and blazing fast analytics.',
       img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
-      features: ['Open Geospatial Consortium (OGC) standard map services', 'Fast vector tile render engines', 'LiDAR elevation profile simulators', 'Automated satellite image change detection'],
+      features: ['Open Geospatial Consortium (OGC) standard map services', 'Fast vector tile render engines', 'LiDAR elevation profile simulators', 'AI geospatial hosting'],
       benefits: ['Zero-latency zooming on heavy mapping portals', 'Automated monitoring of infrastructure encroachment', 'Accurate slope and elevation simulations for builders', 'Standardised GIS API compatibility out-of-the-box'],
-      technologies: ['PostGIS', 'GDAL/OGR', 'MapServer', 'Geoserver', 'Leaflet/MapLibre'],
+      technologies: ['PostGIS', 'GDAL/OGR', 'Geoserver', 'MapLibre'],
       caseStudy: { client: 'Regional Land Registry', challenge: 'Legacy land portal crashed when serving parcel maps to hundreds of builders simultaneously.', solution: 'Replaced GIS middleware with a Go-based spatial tiling backend leveraging parallel coordinate calculations.', outcome: 'Map loading speed boosted by 10×, successfully rendering complex vector layers under intense concurrent traffic.' },
     },
     {
@@ -99,15 +131,108 @@ const Services: React.FC = () => {
       id: 'enterprise-development',
       icon: <Terminal className="w-8 h-8 text-[#05325d]" />,
       title: 'Enterprise Software Development',
-      subtitle: 'Highly Concurrent APIs and Secure Web Dashboards',
-      description: 'We build high-capacity backends and responsive React applications capable of executing intensive database operations under heavy load.',
+      subtitle: 'Highly Concurrent APIs and Mobile Data Collection',
+      description: 'We build high-capacity backends and custom mobile applications designed for real-time field data collection and complex enterprise workflow automation.',
       img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
-      features: ['High-performance FastAPI asynchronous backends', 'Vite + TypeScript React frontend interfaces', 'Secure JWT session management with HTTPS', 'Dockerised cloud deployment architectures'],
+      features: ['High-performance FastAPI asynchronous backends', 'React frontend interfaces', 'Mobile field data collection', 'Secure JWT session management with HTTPS'],
       benefits: ['Fast response times (sub-100ms API endpoints)', 'Zero-fluff clean user interfaces designed for operators', 'Scalable horizontal deployment in AWS/Vercel/Render', 'Type-safe frontends with strict error tracking'],
       technologies: ['FastAPI', 'React', 'TypeScript', 'Tailwind CSS', 'Docker'],
       caseStudy: { client: 'Infrastructure Logistics Group', challenge: 'Field personnel were unable to log asset records due to a slow, buggy legacy portal.', solution: 'Engineered a responsive, mobile-first dashboard powered by an async FastAPI database driver.', outcome: 'Field entry times dropped by 70%, with data syncing seamlessly even on high-latency mobile networks.' },
     },
+    {
+      id: 'cloud-devops',
+      icon: <Cloud className="w-8 h-8 text-[#05325d]" />,
+      title: 'Cloud & DevOps',
+      subtitle: 'Secure Infrastructure Provisioning',
+      description: 'Design scalable cloud architectures, deploying custom authentication, authorization, and resource servers to ensure your data infrastructure is completely secure and highly available.',
+      img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
+      features: ['CI/CD deployment pipelines', 'Authentication & authorization servers', 'Container orchestration', 'High-availability scaling'],
+      benefits: ['Zero-downtime rolling updates', 'Enterprise-grade security and access control', 'Reduced infrastructure hosting costs', 'Seamless scaling during peak traffic'],
+      technologies: ['AWS / GCP / Azure', 'Docker & Kubernetes', 'Terraform', 'OAuth2'],
+      caseStudy: { client: 'Global Financial Services', challenge: 'Legacy monolithic architecture caused frequent outages during peak trading hours.', solution: 'Migrated to a containerised microservices architecture with automated CI/CD and strict identity access management.', outcome: 'Achieved 99.99% uptime and reduced deployment cycles from weeks to hours.' }
+    },
+    {
+      id: 'digital-transformation',
+      icon: <Rocket className="w-8 h-8 text-[#05325d]" />,
+      title: 'Digital Transformation',
+      subtitle: 'n8n Automation & Organizational Upskilling',
+      description: 'Guide legacy businesses into the digital era through complex workflow automation using the n8n low-code platform and comprehensive AI upskilling programs.',
+      img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
+      features: ['n8n low-code workflow automation', 'Legacy system modernization', 'Code2Cognition hands-on AI training', 'Process digitization'],
+      benefits: ['Elimination of manual repetitive tasks', 'Rapid deployment of internal tools', 'Empowered internal teams through skill transfer', 'Accelerated time-to-market for digital products'],
+      technologies: ['n8n', 'Python', 'React Dashboards', 'RESTful APIs'],
+      caseStudy: { client: 'National Logistics Provider', challenge: 'Manual data entry across disconnected systems led to errors and delayed shipping manifests.', solution: 'Implemented n8n workflow automation to synchronize CRM, inventory, and fleet management systems.', outcome: 'Saved over 200 hours monthly and eliminated critical data entry errors.' }
+    },
+    {
+      id: 'gis-remote-sensing',
+      icon: <Map className="w-8 h-8 text-[#05325d]" />,
+      title: 'GIS & Remote Sensing',
+      subtitle: 'Ongoing Site Monitoring & Environmental Analysis',
+      description: 'Leverage remote sensing and earth observation data for ongoing site monitoring, device placement planning, and specialized soil moisture or surface runoff tracking.',
+      img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
+      features: ['Satellite imagery change detection', 'Soil moisture & runoff analysis', 'IoT device placement modeling', 'Time-series environmental tracking'],
+      benefits: ['Data-driven site selection and planning', 'Early detection of environmental risks', 'Optimized resource allocation for agriculture', 'Accurate topographical mapping'],
+      technologies: ['Sentinel/Landsat', 'QGIS', 'Google Earth Engine', 'Python'],
+      caseStudy: { client: 'Regional Agricultural Board (Varanasi)', challenge: 'Unpredictable surface runoff was affecting crop yields and irrigation planning.', solution: 'Developed a specialized analysis pipeline using satellite imagery to track soil moisture and runoff patterns.', outcome: 'Improved irrigation scheduling efficiency by 30% and mitigated flood risks.' }
+    },
+    {
+      id: 'computer-vision',
+      icon: <Eye className="w-8 h-8 text-[#05325d]" />,
+      title: 'Computer Vision',
+      subtitle: 'DeepseekOCR & Image Recognition',
+      description: 'Deploy state-of-the-art visual AI models to extract meaningful data from images, including integrating and fine-tuning DeepseekOCR for accurate document extraction.',
+      img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop',
+      features: ['DeepseekOCR document text extraction', 'Real-time object detection', 'Automated quality control', 'Biometric recognition'],
+      benefits: ['Digitization of physical archives at scale', 'Elimination of manual visual inspections', 'Enhanced security and access control', 'Instant data extraction from complex forms'],
+      technologies: ['OpenCV', 'DeepseekOCR', 'YOLOv8', 'PyTorch'],
+      caseStudy: { client: 'Enterprise Legal Firm', challenge: 'Thousands of scanned legal documents required manual review and data entry.', solution: 'Fine-tuned DeepseekOCR to automatically extract clauses, dates, and signatures from unstructured PDFs.', outcome: 'Document processing speed increased by 400%, saving millions in paralegal hours.' }
+    },
+    {
+      id: 'natural-language-processing',
+      icon: <MessageSquare className="w-8 h-8 text-[#05325d]" />,
+      title: 'Natural Language Processing',
+      subtitle: 'Semantic Search & Conversational Agents',
+      description: 'Build advanced NLP systems that understand and generate human language, empowering applications with intelligent chatbots, semantic search, and summarization.',
+      img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
+      features: ['Custom conversational AI chatbots', 'Semantic search querying', 'Automated sentiment analysis', 'Multi-lingual translation'],
+      benefits: ['24/7 automated customer support', 'Instant retrieval of complex technical documents', 'Real-time social media brand monitoring', 'Global reach with localized content'],
+      technologies: ['Transformers', 'OpenAI APIs', 'spaCy', 'Vector DBs'],
+      caseStudy: { client: 'E-commerce Retailer', challenge: 'Customer support team was overwhelmed with repetitive inquiries about order status and returns.', solution: 'Deployed a context-aware NLP chatbot capable of understanding intent and querying the order database.', outcome: 'Deflected 65% of support tickets, significantly improving customer satisfaction scores.' }
+    },
+    {
+      id: 'predictive-analytics',
+      icon: <LineChart className="w-8 h-8 text-[#05325d]" />,
+      title: 'Predictive Analytics',
+      subtitle: 'Forecasting & Risk Mitigation Models',
+      description: 'Utilize historical data and statistical modeling to forecast future trends, helping pre-empt system downtime, optimize inventory, and mitigate financial risks.',
+      img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
+      features: ['Time-series demand forecasting', 'Predictive maintenance alerts', 'Churn prediction modeling', 'Dynamic pricing optimization'],
+      benefits: ['Proactive rather than reactive decision making', 'Significant reduction in inventory holding costs', 'Maximized revenue through dynamic pricing', 'Improved customer retention rates'],
+      technologies: ['Prophet', 'ARIMA', 'XGBoost', 'scikit-learn'],
+      caseStudy: { client: 'Global Manufacturing Corp', challenge: 'Unexpected equipment failures caused costly production halts.', solution: 'Implemented predictive maintenance models using historical telemetry and sensor data.', outcome: 'Reduced unexpected downtime by 50% and optimized spare parts inventory.' }
+    }
   ];
+
+  // Track active section for sticky tabs
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+        if (visibleEntries.length > 0) {
+          visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          setActiveSection(visibleEntries[0].target.id);
+        }
+      },
+      { rootMargin: '-140px 0px -60% 0px', threshold: [0, 0.2, 0.5, 0.8, 1] }
+    );
+
+    serviceList.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [serviceList]);
 
   return (
     <>
@@ -133,18 +258,38 @@ const Services: React.FC = () => {
         </section>
 
         {/* ── NAV PILLS ── */}
-        <div className="border-b border-[#c8c0aa] bg-white sticky top-20 z-30">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 overflow-x-auto">
-            <div className="flex gap-0">
-              {serviceList.map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  className="whitespace-nowrap px-5 py-4 text-xs font-semibold text-[#555] hover:text-[#05325d] hover:bg-[#f5f0e8] border-r border-[#c8c0aa] transition-colors"
-                >
-                  {s.title}
-                </a>
-              ))}
+        <div 
+          className={`bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.05)] border-b border-[#e5e7eb] w-full z-40 transition-all duration-300 sticky ${isNavVisible ? 'top-[76px]' : 'top-0'}`}
+        >
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+            <div 
+              ref={scrollContainerRef}
+              className="flex overflow-x-auto w-full whitespace-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            >
+              {serviceList.map((s) => {
+                const isActive = activeSection === s.id;
+                return (
+                  <a
+                    key={s.id}
+                    id={`nav-tab-${s.id}`}
+                    href={`#${s.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById(s.id);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        window.history.pushState(null, '', `#${s.id}`);
+                      }
+                    }}
+                    className={`px-5 py-4 text-sm font-semibold transition-all duration-300 border-b-2 flex-shrink-0
+                      ${isActive 
+                        ? 'text-[#05325d] border-[#05325d] bg-slate-50' 
+                        : 'text-slate-500 border-transparent hover:text-[#05325d] hover:bg-slate-50'}`}
+                  >
+                    {s.title}
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -155,7 +300,7 @@ const Services: React.FC = () => {
             <div
               key={service.id}
               id={service.id}
-              className="scroll-mt-32 border-b border-[#c8c0aa] py-20 grid grid-cols-1 lg:grid-cols-2 gap-16"
+              className="scroll-mt-[140px] border-b border-[#c8c0aa] py-20 grid grid-cols-1 lg:grid-cols-2 gap-16"
             >
               {/* Left: Info */}
               <div className="space-y-6">
@@ -206,7 +351,7 @@ const Services: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right: Case Study — Suzlon image card */}
+              {/* Right: Case Study — Image card */}
               <div className="flex flex-col">
                 {/* Image card header */}
                 <Card
