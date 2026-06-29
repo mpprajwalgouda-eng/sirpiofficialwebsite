@@ -9,9 +9,7 @@ import {
 import SEO from '../components/SEO';
 import Card from '../components/Card';
 
-/* ─────────────────────────────────────────────────────────────
-   Animated counter (Suzlon-style: large teal numbers)
-───────────────────────────────────────────────────────────── */
+
 const Counter: React.FC<{ value: number; suffix?: string; label: string }> = ({ value, suffix = '', label }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -348,16 +346,16 @@ const Home: React.FC = () => {
             viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }}
           >
             <Link to={`/services#${services[5].slug}`} className="block group">
-              <div className="relative overflow-hidden rounded-2xl h-52 cursor-pointer">
+              <div className="relative overflow-hidden rounded-2xl h-[290px] sm:h-52 cursor-pointer">
                 <img src={services[5].img} alt={services[5].title}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent rounded-2xl" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 flex items-end justify-between">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                   <div>
-                    <h3 className="font-bold text-2xl text-white leading-snug mb-1">{services[5].title}</h3>
-                    <p className="text-white/80 text-sm leading-relaxed max-w-xl">{services[5].description}</p>
+                    <h3 className="font-bold text-xl sm:text-2xl text-white leading-snug mb-1">{services[5].title}</h3>
+                    <p className="text-white/80 text-xs sm:text-sm leading-relaxed max-w-xl line-clamp-2 sm:line-clamp-none">{services[5].description}</p>
                   </div>
-                  <span className="flex-shrink-0 inline-flex items-center gap-2 text-xs font-semibold text-[#6eb4f7] ml-4">
+                  <span className="flex-shrink-0 inline-flex items-center gap-2 text-xs font-semibold text-[#6eb4f7] sm:ml-4 self-start sm:self-auto">
                     Learn More <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>

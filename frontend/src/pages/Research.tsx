@@ -89,28 +89,33 @@ const Research: React.FC = () => {
           </div>
         </section>
 
-        {/* ── FOCUS AREAS — Suzlon image cards ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
+        {/* ── FOCUS AREAS — Image cards ── */}
+        <section id="spatial-analytics" className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa] scroll-mt-24">
           <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Research Focus</p>
           <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-12">Areas of Investigation</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
             {focusAreas.map((area, i) => (
-              <Card
+              <div
                 key={i}
-                img={area.img}
-                title={area.title}
-                description={area.desc}
-                icon={area.icon}
-                height="h-80"
-                gradient="strong"
-                className="w-full"
-              />
+                id={area.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}
+                className="scroll-mt-24"
+              >
+                <Card
+                  img={area.img}
+                  title={area.title}
+                  description={area.desc}
+                  icon={area.icon}
+                  height="h-80"
+                  gradient="strong"
+                  className="w-full"
+                />
+              </div>
             ))}
           </div>
         </section>
 
         {/* ── PUBLICATIONS ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
+        <section id="publications" className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa] scroll-mt-24">
           <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Academic Output</p>
           <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-12">Publications</h2>
 
@@ -141,8 +146,8 @@ const Research: React.FC = () => {
           </div>
         </section>
 
-        {/* ── PATENTS — Suzlon image cards ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
+        {/* ── PATENTS — Image cards ── */}
+        <section id="patents" className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa] scroll-mt-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
               <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Intellectual Property</p>

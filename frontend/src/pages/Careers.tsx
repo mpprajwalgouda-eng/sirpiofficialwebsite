@@ -114,7 +114,7 @@ const Careers: React.FC = () => {
           </div>
         </section>
 
-        {/* ── CULTURE + BENEFITS — Suzlon image cards ── */}
+        {/* ── CULTURE + BENEFITS — Image cards ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
           <div className="flex flex-col lg:flex-row gap-16">
             {/* Left: Culture text */}
@@ -128,7 +128,7 @@ const Careers: React.FC = () => {
               </p>
             </div>
 
-            {/* Right: Benefits — Suzlon image cards */}
+            {/* Right: Benefits — Image cards */}
             <div className="lg:w-2/3">
               <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-6">Employee Benefits</p>
               <div className="grid grid-cols-2 gap-1">
@@ -148,7 +148,7 @@ const Careers: React.FC = () => {
           </div>
         </section>
 
-        {/* ── OPEN POSITIONS — Suzlon image cards ── */}
+        {/* ── OPEN POSITIONS — Image cards ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 border-b border-[#c8c0aa]">
           <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Open Roles</p>
           <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-12">Current Openings</h2>
@@ -156,7 +156,7 @@ const Careers: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
             {openPositions.map((job, i) => (
               <div key={i} className="group">
-                {/* Suzlon image card */}
+                {/* Image card */}
                 <Card
                   img={job.img}
                   title={job.title}

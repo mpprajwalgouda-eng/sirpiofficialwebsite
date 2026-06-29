@@ -35,23 +35,23 @@ const navItems = [
     name: 'Industries',
     path: '/industries',
     dropdown: [
-      { label: 'Wind Energy',    path: '/industries' },
-      { label: 'Telecom',        path: '/industries' },
-      { label: 'Healthcare',     path: '/industries' },
-      { label: 'Manufacturing',  path: '/industries' },
-      { label: 'Government',     path: '/industries' },
-      { label: 'Research',       path: '/industries' },
+      { label: 'Wind Energy',    path: '/industries#wind-energy' },
+      { label: 'Telecom',        path: '/industries#telecom' },
+      { label: 'Healthcare',     path: '/industries#healthcare' },
+      { label: 'Manufacturing',  path: '/industries#manufacturing' },
+      { label: 'Government',     path: '/industries#government' },
+      { label: 'Research',       path: '/industries#research' },
     ],
   },
   {
     name: 'Research',
     path: '/research',
     dropdown: [
-      { label: 'Spatial Analytics',   path: '/research' },
-      { label: 'Secure ML Ops',       path: '/research' },
-      { label: 'Physics-Guided ML',   path: '/research' },
-      { label: 'Publications',        path: '/research' },
-      { label: 'Patents',             path: '/research' },
+      { label: 'Spatial Analytics',   path: '/research#spatial-analytics' },
+      { label: 'Secure ML Ops',       path: '/research#secure-ml-ops' },
+      { label: 'Physics-Guided ML',   path: '/research#physics-guided-ml' },
+      { label: 'Publications',        path: '/research#publications' },
+      { label: 'Patents',             path: '/research#patents' },
     ],
   },
   { name: 'Careers',    path: '/careers' },
@@ -89,6 +89,22 @@ const Navbar: React.FC = () => {
     setSearchQuery('');
     setActiveDropdown(null);
     setMobileExpanded(null);
+
+    // Scroll to hash element after navigation (with small delay for page render)
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const attempt = (retries: number) => {
+        const el = document.getElementById(id);
+        if (el) {
+          const navHeight = navbarRef.current?.offsetHeight ?? 76;
+          const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 8;
+          window.scrollTo({ top, behavior: 'smooth' });
+        } else if (retries > 0) {
+          setTimeout(() => attempt(retries - 1), 150);
+        }
+      };
+      setTimeout(() => attempt(5), 100);
+    }
   }, [location]);
 
   // Scroll hide/show + background

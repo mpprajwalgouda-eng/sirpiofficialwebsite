@@ -106,7 +106,7 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* ── TIMELINE — Suzlon image cards ── */}
+        {/* ── TIMELINE — Image cards ── */}
         <section className="py-24 bg-[#021124]">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
             <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Evolution</p>
@@ -128,7 +128,7 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* ── ACHIEVEMENTS — Suzlon image cards ── */}
+        {/* ── ACHIEVEMENTS — Image cards ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-b border-[#c8c0aa]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left */}
@@ -148,7 +148,7 @@ const About: React.FC = () => {
               </ul>
             </div>
 
-            {/* Right — Suzlon achievement image cards */}
+            {/* Right — Achievement image cards */}
             <div className="grid grid-cols-1 gap-1">
               {achievements.map((a, i) => (
                 <Card

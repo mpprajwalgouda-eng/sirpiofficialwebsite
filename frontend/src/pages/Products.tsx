@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Card from '../components/Card';
 
@@ -19,6 +20,47 @@ interface ProductItem {
 
 const Products: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [searchParams] = useSearchParams();
+
+  // Sync category from URL query param (?cat=...)
+  useEffect(() => {
+    const cat = searchParams.get('cat');
+    if (cat) {
+      setActiveCategory(cat);
+    } else {
+      setActiveCategory('All');
+    }
+  }, [searchParams]);
+
+  // Scroll active tab into view
+  useEffect(() => {
+    if (activeCategory && scrollContainerRef.current) {
+      const activeTab = document.getElementById(`nav-tab-${activeCategory.replace(/\s+/g, '-')}`);
+      const container = scrollContainerRef.current;
+      if (activeTab && container) {
+        const scrollLeft = activeTab.offsetLeft - (container.offsetWidth / 2) + (activeTab.offsetWidth / 2);
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      }
+    }
+  }, [activeCategory]);
+
+  // Sync nav visibility with main Navbar
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+        setIsNavVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsNavVisible(true);
+      }
+      lastScrollY = currentScrollY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const productList: ProductItem[] = [
     { slug: 'windvista-2', name: 'WindVista 2', category: 'Energy Analytics', shortDesc: 'Enhanced wind energy asset management platform centralising Shear, LTT, and WindexGraph for faster wind data analysis and reporting.' },
@@ -82,27 +124,35 @@ const Products: React.FC = () => {
         </section>
 
         {/* ── CATEGORY FILTER ── */}
-        <div className="border-b border-[#c8c0aa] bg-white sticky top-20 z-30">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 overflow-x-auto">
-            <div className="flex gap-0">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`whitespace-nowrap px-5 py-4 text-xs font-semibold border-r border-[#c8c0aa] transition-colors ${
-                    activeCategory === cat
-                      ? 'bg-[#05325d] text-white'
-                      : 'text-[#555] hover:text-[#05325d] hover:bg-[#f5f0e8]'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+        <div 
+          className={`bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.05)] border-b border-[#e5e7eb] w-full z-40 transition-all duration-300 sticky ${isNavVisible ? 'top-[76px]' : 'top-0'}`}
+        >
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+            <div 
+              ref={scrollContainerRef}
+              className="flex overflow-x-auto w-full whitespace-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            >
+              {categories.map(cat => {
+                const isActive = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    id={`nav-tab-${cat.replace(/\s+/g, '-')}`}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-5 py-4 text-sm font-semibold transition-all duration-300 border-b-2 flex-shrink-0
+                      ${isActive 
+                        ? 'text-[#05325d] border-[#05325d] bg-slate-50' 
+                        : 'text-slate-500 border-transparent hover:text-[#05325d] hover:bg-slate-50'}`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
 
-        {/* ── PRODUCT GRID — Suzlon image cards ── */}
+        {/* ── PRODUCT GRID — Image cards ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
             {filtered.map((product, i) => (

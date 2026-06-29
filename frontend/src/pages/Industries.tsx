@@ -79,12 +79,16 @@ const Industries: React.FC = () => {
           </div>
         </section>
 
-        {/* ── INDUSTRY GRID — Suzlon full-bleed cards ── */}
+        {/* ── INDUSTRY GRID — Full-bleed cards ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-1">
             {industries.map((ind, i) => (
-              <div key={i} className="group">
-                {/* Suzlon-style image card */}
+              <div
+                key={i}
+                id={ind.name.toLowerCase().replace(/\s+/g, '-')}
+                className="group scroll-mt-24"
+              >
+                {/* Image card */}
                 <Card
                   img={ind.img}
                   title={ind.name}
