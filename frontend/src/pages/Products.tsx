@@ -106,7 +106,7 @@ const Products: React.FC = () => {
         description="Discover our specialised software products: WindVista, URAI Chatbot, AI Upskilling Academy, OGC Map Server, and more."
       />
 
-      <div className="bg-[#f5f0e8]">
+      <div className="bg-[#f0f4fa]">
 
         {/* ── PAGE HEADER ── */}
         <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">

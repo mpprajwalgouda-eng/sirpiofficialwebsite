@@ -6,7 +6,7 @@ import SEO from "../../components/SEO";
 
 const DARK = "#0A1628";
 const FROST = "#F0F4FA";
-const CREAM = "#F5F3EE";
+const CREAM = "#F0F4FA";
 const BODY_DARK = "#8A9BB5";
 const BODY_LIGHT = "#4A5568";
 const N = "#002E5D";
