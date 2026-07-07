@@ -1,8 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 @import "tailwindcss";
 
 :root {
+  /* ── SIRPI Brand Tokens ─────────────────────────────────── */
+  --navy:         #0A1628;
+  --navy-light:   #0d1e35;
+  --teal:         #F0F4FA; /* Replaced teal with frost per request */
+  --teal-dark:    #C8D4E3; /* Replaced dark teal with light blue */
+  --frost:        #F0F4FA;
+  --slate:        #8A9BB5;
+  --cream:        #F5F3EE;
+  --cream-border: #D6D3CC;
+  --ink:          #0A1628;
+  --ink-muted:    #6B7A8D;
+
+  /* ── Legacy tokens (kept for non-home pages) ────────────── */
   --color-sirpi-bg: #F8FAFC;
   --color-sirpi-surface: #FFFFFF;
   --color-sirpi-primary: #4F46E5;
@@ -200,4 +213,367 @@ body {
   .offerings-c2 { grid-column: 3; grid-row: 1 / span 2; }
   .offerings-c3 { grid-column: 1; grid-row: 2; }
   .offerings-c4 { grid-column: 2; grid-row: 2; }
+}
+
+/* ── SIRPI Homepage typography ──────────────────────────────── */
+.font-serif-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.font-mono-label {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+/* ── Pulsing teal dot (hero eyebrow) ────────────────────────── */
+.teal-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes teal-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(1.4); }
+  }
+  .teal-dot {
+    animation: teal-pulse 2s ease-in-out infinite;
+  }
+}
+
+/* ── Fade-up scroll entrance animation ──────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delays for grouped items */
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+}
+
+/* ── Pain card (Problem Statement) ─────────────────────────── */
+.pain-card {
+  border-left: 3px solid var(--teal);
+  background: var(--navy-light);
+  padding: 1.25rem 1.5rem;
+}
+
+/* ── Product tab button ─────────────────────────────────────── */
+.product-tab {
+  padding: 0.625rem 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  color: var(--slate);
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  white-space: nowrap;
+}
+.product-tab:hover { color: var(--frost); }
+.product-tab.active {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+}
+
+/* ── Accordion for mobile product tabs ──────────────────────── */
+@media (max-width: 767px) {
+  .product-tabs-bar { display: none; }
+  .product-tab-accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: var(--navy-light);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--frost);
+    letter-spacing: 0.03em;
+  }
+  .product-tab-accordion-header.open { color: var(--teal); }
+}
+@media (min-width: 768px) {
+  .product-tab-accordion-header { display: none; }
+}
+
+/* ── Industries marquee ─────────────────────────────────────────── */
+.marquee-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(90deg, #0A1628 0%, transparent 100%);
+}
+
+.marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(270deg, #0A1628 0%, transparent 100%);
+}
+
+.marquee-outer {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  user-select: none;
+  width: 100%;
+}
+
+.marquee-outer:active {
+  cursor: grabbing;
+}
+
+.marquee-outer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Track: no gap, no horizontal padding — margin-right on cards is the
+   only spacing. This keeps the JS seamless looping pixel-perfect. */
+.marquee-track {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: max-content;
+  padding: 12px 0;
+}
+
+/* Domain card — premium enterprise style */
+.domain-card {
+  position: relative;
+  width: 420px;
+  min-height: 360px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: 20px;
+  border: 0.5px solid rgba(240,244,250,0.14);
+  border-top: 2px solid rgba(240,244,250,0.20);
+}
+
+.card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
+}
+
+.domain-card:hover .card-bg {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(10,22,40,0.80) 0%,
+    rgba(10,22,40,0.60) 100%
+  );
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 2.2rem;
+  height: 100%;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.card-text-wrapper {
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #F0F4FA;
+  letter-spacing: -0.01em;
+  margin: 0 0 10px 0;
+}
+
+.card-outcome {
+  font-size: 12px;
+  font-weight: 600;
+  color: #C8D4E3;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 12px 0;
+}
+
+.card-desc {
+  font-size: 15px;
+  color: rgba(240,244,250,0.70);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .domain-card {
+    width: 320px;
+    min-height: 280px;
+  }
+  .card-content {
+    min-height: 280px;
+    padding: 1.8rem;
+  }
+  .card-text-wrapper {
+    height: 155px;
+  }
+  .card-name { font-size: 22px; margin: 0 0 8px 0; }
+  .card-desc { font-size: 13.5px; }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .domain-card {
+    width: 260px;
+    min-height: 220px;
+  }
+  .card-content { 
+    padding: 1.4rem; 
+    min-height: 220px;
+  }
+  .card-text-wrapper {
+    height: 60px;
+  }
+  .card-name { font-size: 18px; }
+  .card-outcome { font-size: 10px; }
+  .card-desc { display: none; }
+}
+
+/* Reduced motion — stop animation, wrap into centered grid.
+   Hide duplicate set so cards don't appear twice. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+    gap: 16px;
+  }
+  .domain-card { 
+    margin-right: 0; 
+    flex-shrink: 1;
+    width: 380px;
+  }
+  .marquee-track > :nth-child(n+7) { display: none; }
+}
+
+/* ── Hero layout fixes ─────────────────────────────────────────── */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding: 120px 3rem 3rem;
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 100px 1.5rem 2rem;
+    max-width: 100%;
+  }
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #F0F4FA;
+  margin-bottom: 20px;
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4FC3A1;
+  flex-shrink: 0;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.75); }
+  }
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 32px;
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+  .hero-ctas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(10, 22, 40, 0.88) 0%,
+    rgba(10, 22, 40, 0.65) 50%,
+    rgba(10, 22, 40, 0.20) 100%
+  );
+  z-index: 1;
 }
