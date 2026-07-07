@@ -1,662 +1,606 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
-  ArrowRight, Cpu, Brain, Database, Globe, Wind, Terminal,
-  CheckCircle, Volume2, VolumeX,
-  MapPin, BarChart2, Layers
-} from 'lucide-react';
-import SEO from '../components/SEO';
-import Card from '../components/Card';
+  ArrowRight, Brain, Database, Cpu, BarChart2,
+  Target, Link2, ShieldCheck, Lightbulb,
+  Wind, Radio, Landmark, Map, HeartPulse, Factory,
+} from "lucide-react";
+import SEO from "../components/SEO";
 
+/* Two-color SIRPI palette */
+const N = "#002E5D";   /* navy  */
+/* ─── Frost / ink shorthands ─── */
+const FROST = "#F0F4FA";
+const INK = "#0A1628";
 
-const Counter: React.FC<{ value: number; suffix?: string; label: string }> = ({ value, suffix = '', label }) => {
+/* ─── Domain marquee data (rendered twice for seamless loop) ─── */
+const DOMAINS = [
+  {
+    icon: <Wind size={22} />,
+    bgImage: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&q=90",
+    name: "Wind Energy",
+    outcome: "TURBINE OPTIMISATION & SPATIAL ANALYSIS",
+    desc: "AI-driven shear profiling, LTT analysis, and WindexGraph — purpose-built for large-scale wind farm operations.",
+  },
+  {
+    icon: <Radio size={22} />,
+    bgImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=90",
+    name: "Telecom",
+    outcome: "COVERAGE MAPPING & OUTAGE PLANNING",
+    desc: "Predictive network intelligence that turns signal data into proactive maintenance and planning decisions.",
+  },
+  {
+    icon: <Landmark size={22} />,
+    bgImage: "https://images.unsplash.com/photo-1555848962-6e79363ec58f?w=1200&q=90",
+    name: "Government",
+    outcome: "OGC GEOSPATIAL & DIGITAL PUBLIC INFRA",
+    desc: "Standards-compliant GIS platforms and DPI systems built for the scrutiny of public sector procurement.",
+  },
+  {
+    icon: <Map size={22} />,
+    bgImage: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&q=90",
+    name: "Geospatial",
+    outcome: "STATIC MAPS INTO LIVING INTELLIGENCE",
+    desc: "Spatial data pipelines and AI layers that turn raw geodata into real-time operational insights.",
+  },
+  {
+    icon: <HeartPulse size={22} />,
+    bgImage: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1200&q=90",
+    name: "Healthcare",
+    outcome: "MEDICAL IMAGE ANALYSIS & CLASSIFICATION",
+    desc: "Deep learning models for diagnostic imaging, clinical data structuring, and patient workflow automation.",
+  },
+  {
+    icon: <Factory size={22} />,
+    bgImage: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1200&q=90",
+    name: "Manufacturing",
+    outcome: "COMPUTER VISION & PREDICTIVE MAINTENANCE",
+    desc: "Real-time defect detection and machine health monitoring — reducing unplanned downtime on the shop floor.",
+  },
+];
+
+/* Animated counter — easeOut cubic via rAF, respects prefers-reduced-motion */
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const Counter: React.FC<{ value: number; suffix?: string; label: string; source?: string }> = ({ value, suffix = "", label, source }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  const [started, setStarted] = useState(false);
+  const triggered = useRef(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setStarted(true); },
+      ([e]) => {
+        if (e.isIntersecting && !triggered.current) {
+          triggered.current = true;
+          observer.unobserve(e.target);
+          if (prefersReducedMotion()) { setCount(value); return; }
+          const duration = 1800;
+          let start: number | null = null;
+          const step = (timestamp: number) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * value));
+            if (progress < 1) requestAnimationFrame(step);
+            else setCount(value);
+          };
+          requestAnimationFrame(step);
+        }
+      },
       { threshold: 0.3 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started) return;
-    let start = 0;
-    const step = Math.ceil(value / 50);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= value) { setCount(value); clearInterval(timer); }
-      else setCount(start);
-    }, 30);
-    return () => clearInterval(timer);
-  }, [started, value]);
+  }, [value]);
 
   return (
-    <div ref={ref} className="py-10 px-6 border-b border-[#c8c0aa]">
-      <div className="text-5xl sm:text-6xl font-bold text-[#05325d] tracking-tight">
-        {count.toLocaleString()}{suffix}
-      </div>
-      <p className="text-[#555] text-sm mt-3 leading-snug max-w-[180px]">{label}</p>
+    <div ref={ref} className="py-10 px-6">
+      <div className="font-serif-display text-5xl sm:text-6xl font-bold tracking-tight" style={{ color: N }}>{count}{suffix}</div>
+      <p className="text-sm font-semibold mt-2 max-w-[200px]" style={{ color: N }}>{label}</p>
+      {source && <p className="text-xs mt-1 italic max-w-[210px]" style={{ color: "#5a7a9f" }}>{source}</p>}
     </div>
   );
 };
 
-/* ─────────────────────────────────────────────────────────────
-   Main Component
-───────────────────────────────────────────────────────────── */
-const Home: React.FC = () => {
-  const [muted, setMuted] = useState(true);
+/* ─── Product cards data ─── */
+const PRODUCTS = [
+  {
+    tag: "Wind Analytics",
+    name: "WindVista 2",
+    sentence: "Centralises Shear, LTT, and WindexGraph analysis in one platform — cutting wind farm reporting time from days to hours.",
+    href: "/products/windvista-2",
+  },
+  {
+    tag: "AI Chatbot",
+    name: "URAI",
+    sentence: "Answers operational questions in natural language — connecting field teams to critical data without a single spreadsheet.",
+    href: "/products/urai",
+  },
+  {
+    tag: "Data Pipelines",
+    name: "Batch Uploader",
+    sentence: "Handles bulk data ingestion with built-in validation and automated pipeline triggers — so your data is always clean and ready for analysis.",
+    href: "/products/batch-uploader",
+  },
+];
 
-  const [activeWorkflow, setActiveWorkflow] = useState(0);
+/* ─── Why SIRPI differentiator data ─── */
+const DIFFERENTIATORS = [
+  {
+    icon: <Target className="w-4 h-4" />,
+    title: "Domain-specific AI, not generic tools",
+    body: "Every product and solution is purpose-built for the engineering complexity of its industry — not adapted from a horizontal platform.",
+  },
+  {
+    icon: <Link2 className="w-4 h-4" />,
+    title: "Product + service model",
+    body: "We don't just hand over software and leave. We build, deploy, and stay — so the solution keeps working as your environment evolves.",
+  },
+  {
+    icon: <ShieldCheck className="w-4 h-4" />,
+    title: "OGC-compliant and enterprise-ready",
+    body: "Our geospatial and data systems meet international open standards — built for the scrutiny of government and large enterprise procurement.",
+  },
+  {
+    icon: <Lightbulb className="w-4 h-4" />,
+    title: "Founded by engineers, not marketers",
+    body: "Our founding team holds 7 patents, including work at Apple. We know what it takes to build something that actually works in the field.",
+  },
+];
+
+/* ─── Main Component ──────────────────────────────────────────── */
+const Home: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => setActiveWorkflow(p => (p + 1) % 4), 4000);
-    return () => clearInterval(timer);
-  }, []);
+  /* ── Marquee Interactive State ── */
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const isHovered = useRef(false);
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !muted;
-      setMuted(!muted);
-    }
+  useEffect(() => {
+    const marquee = marqueeRef.current;
+    if (!marquee || prefersReducedMotion()) return;
+
+    let animationId: number;
+    let lastTime = performance.now();
+    let exactScrollLeft = marquee.scrollLeft;
+
+    const autoScroll = (time: number) => {
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (!isDragging && !isHovered.current) {
+        // scroll speed: approx 0.05px per ms (3px per frame)
+        exactScrollLeft += (delta * 0.06);
+
+        const halfWidth = marquee.scrollWidth / 2;
+        if (exactScrollLeft >= halfWidth) {
+          exactScrollLeft -= halfWidth;
+        } else if (exactScrollLeft <= 0) {
+          exactScrollLeft += halfWidth;
+        }
+        marquee.scrollLeft = exactScrollLeft;
+      } else {
+        exactScrollLeft = marquee.scrollLeft;
+      }
+      animationId = requestAnimationFrame(autoScroll);
+    };
+
+    animationId = requestAnimationFrame(autoScroll);
+    return () => cancelAnimationFrame(animationId);
+  }, [isDragging]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const marquee = marqueeRef.current;
+    if (!marquee) return;
+    setIsDragging(true);
+    setStartX(e.pageX - marquee.offsetLeft);
+    setScrollLeft(marquee.scrollLeft);
   };
 
-  const services = [
-    {
-      icon: <Wind className="w-8 h-8 text-[#05325d]" />,
-      title: 'Wind Energy Analytics',
-      description: 'Advanced wind resource assessment, turbine efficiency prediction, and spatial site optimisation tools built for the renewable energy sector.',
-      slug: 'wind-energy',
-      img: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      icon: <Globe className="w-8 h-8 text-[#05325d]" />,
-      title: 'Geospatial Engineering',
-      description: 'Satellite imagery processing, GIS data structures, mapping APIs, and custom OGC-compliant map servers.',
-      slug: 'geospatial-engineering',
-      img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      icon: <Cpu className="w-8 h-8 text-[#05325d]" />,
-      title: 'Artificial Intelligence',
-      description: 'Custom NLP engines, computer vision algorithms, and generative AI systems engineered to scale in enterprise environments.',
-      slug: 'artificial-intelligence',
-      img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      icon: <Brain className="w-8 h-8 text-[#05325d]" />,
-      title: 'Machine Learning',
-      description: 'Supervised and unsupervised predictive models for demand forecasting, classification, and complex operational optimisation.',
-      slug: 'machine-learning',
-      img: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      icon: <Database className="w-8 h-8 text-[#05325d]" />,
-      title: 'Data Science',
-      description: 'Enterprise analytics, data transformation pipelines, and visual dashboards for real-time business insight and decision support.',
-      slug: 'data-science',
-      img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      icon: <Terminal className="w-8 h-8 text-[#05325d]" />,
-      title: 'Enterprise Software',
-      description: 'Secure, cloud-native full-stack applications built with FastAPI, React, and microservices for large-scale industrial deployments.',
-      slug: 'enterprise-development',
-      img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
-    },
-  ];
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    isHovered.current = false;
+  };
 
-  const products = [
-    {
-      name: 'WindVista 2',
-      slug: 'windvista-2',
-      tag: 'Wind Analytics',
-      desc: 'Enhanced wind energy asset management platform centralising Shear, LTT, and WindexGraph for faster analysis and reporting.',
-      featured: true,
-    },
-    { name: 'WindVista 1', slug: 'windvista-1', tag: 'Wind Analytics', desc: 'Key platform for managing all wind energy assets and data. Covers site assessment, energy prediction, and operational management.' },
-    { name: 'Batch Uploader', slug: 'batch-uploader', tag: 'Data Pipelines', desc: 'Tool for bulk data uploading and processing to support wind energy and geospatial data pipelines.' },
-    { name: 'WindBug', slug: 'windbug', tag: 'Wind Operations', desc: 'Bug tracking and QA tool specific to wind energy software projects, supporting operational management.' },
-    { name: 'Decomm', slug: 'decomm', tag: 'Asset Management', desc: 'Decommissioning management tool for tracking and managing wind farm or industrial asset decommissioning.' },
-  ];
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
-  const industries = [
-    { name: 'Wind Energy', desc: 'Turbine optimisation & spatial analysis', img: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop' },
-    { name: 'Telecom', desc: 'Network coverage mapping & outage planning', img: 'https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?q=80&w=800&auto=format&fit=crop' },
-    { name: 'Manufacturing', desc: 'Computer vision quality & predictive maintenance', img: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop' },
-    { name: 'Healthcare', desc: 'Medical image analysis & data classification', img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop' },
-    { name: 'Government', desc: 'Urban planning, GIS infrastructure & mapping', img: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800&auto=format&fit=crop' },
-    { name: 'Research', desc: 'Deep learning & academic data science', img: 'https://images.unsplash.com/photo-1532094349884-543559c5f185?q=80&w=800&auto=format&fit=crop' },
-  ];
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const marquee = marqueeRef.current;
+    if (!isDragging || !marquee) return;
+    e.preventDefault();
+    const x = e.pageX - marquee.offsetLeft;
+    const walk = (x - startX) * 1.5; // Drag speed multiplier
 
-  const workflowSteps = [
-    { title: 'Data Sources', desc: 'Ingesting raw inputs from satellites, IoT sensor grids, databases, and operational logs.' },
-    { title: 'AI Processing', desc: 'Applying deep learning models, classification pipelines, and geospatial transformation algorithms.' },
-    { title: 'Analytics', desc: 'Generating high-performance vector tiles, metric forecasts, and real-time anomaly triggers.' },
-    { title: 'Decision Intelligence', desc: 'Presenting actionable insights to stakeholders via secure, auditable enterprise portals.' },
-  ];
+    let newScrollLeft = scrollLeft - walk;
 
+    const halfWidth = marquee.scrollWidth / 2;
+    if (newScrollLeft >= halfWidth) {
+      newScrollLeft -= halfWidth;
+      setStartX(e.pageX - marquee.offsetLeft);
+      setScrollLeft(newScrollLeft);
+    } else if (newScrollLeft <= 0) {
+      newScrollLeft += halfWidth;
+      setStartX(e.pageX - marquee.offsetLeft);
+      setScrollLeft(newScrollLeft);
+    }
 
+    marquee.scrollLeft = newScrollLeft;
+  };
+
+  /* ── Shared fade-up IntersectionObserver ── */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
       <SEO
-        title="Transforming Data into Decisive Action"
-        description="SIRPI Technologies delivers enterprise-grade AI, data science, geospatial engineering, wind energy analytics, and custom software systems."
-        schema={{
-          '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'SIRPI Technologies',
-          url: 'https://sirpi.io',
-          description: 'Leading provider of AI, machine learning, and geospatial solutions.',
-        }}
+        title="Turn Engineering Data into Decisions | SIRPI Technologies"
+        description="SIRPI delivers AI-powered products and custom solutions for wind energy, telecom, government, and geospatial environments."
+        schema={{ "@context": "https://schema.org", "@type": "Organization", name: "SIRPI Technologies", url: "https://sirpi.io" }}
       />
 
-      {/* ═══════════════════════════════════════════════════════
-          HERO — Full-screen video, no text overlay (Suzlon style)
-      ═══════════════════════════════════════════════════════ */}
-      <section className="relative w-full h-screen overflow-hidden bg-[#0a1628]">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
+      {/* ═══════ HERO ═══════ */}
+      <section className="hero-section" style={{ background: N }}>
+        <motion.video ref={videoRef} autoPlay loop muted playsInline
+          initial={{ scale: 1 }} animate={{ scale: 1.05 }} transition={{ duration: 20, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
           className="absolute inset-0 w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop"
-        >
+          poster="https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop">
           <source src="/hero-bg-video.mp4" type="video/mp4" />
-        </video>
+        </motion.video>
+        <div className="hero-overlay" />
 
-        {/* Very light overlay so video breathes */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="hero-content">
 
-        {/* Text Overlay */}
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg max-w-5xl"
-          >
-            Your Data. Our Intelligence.<br className="hidden sm:block" /> Clear Decisions.
+
+          {/* Headline */}
+          <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.12 }}
+            className="text-[40px] md:text-[48px] lg:text-[68px] mb-6"
+            style={{ fontFamily: "Georgia, serif", fontWeight: 700, color: "#F0F4FA", letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+            Engineering Intelligence.<br />
+            Clear Decisions.
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-4xl drop-shadow-md"
-          >
-            AI powered web applications, mobile applications, chatbots, and intelligent automation solutions.
+
+          {/* Sub */}
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.24 }}
+            className="text-[17px] sm:text-[19px] leading-relaxed mb-8 max-w-2xl" style={{ color: "rgba(255,255,255,0.7)" }}>
+            Built for industries where data complexity isn't the exception — it's the entire problem.
+            SIRPI delivers AI-powered products and custom solutions for the world's most demanding data environments.
           </motion.p>
+
+          <div className="hero-ctas">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.36 }}>
+              <Link to="/contact?type=demo"
+                className="inline-flex items-center gap-2 px-8 py-4 font-semibold text-lg rounded-md transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                style={{ background: N, color: FROST }}>
+                Start a Conversation <ArrowRight className="w-5 h-5" />
+              </Link>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.46 }}>
+              <Link to="/products"
+                className="inline-flex items-center gap-2 px-6 py-4 text-lg font-medium transition-all duration-300 hover:text-white"
+                style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none" }}>
+                See Our Work
+              </Link>
+            </motion.div>
+          </div>
         </div>
-
-        {/* Mute toggle — Suzlon style: circle bottom-right */}
-        <button
-          onClick={toggleMute}
-          aria-label={muted ? 'Unmute hero video' : 'Mute hero video'}
-          className="absolute bottom-8 right-8 z-20 w-12 h-12 rounded-full border border-white/50 bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-all"
-        >
-          {muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-        </button>
-
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          REST OF PAGE — cream/off-white background
-      ═══════════════════════════════════════════════════════ */}
-      <div className="bg-[#f5f0e8] relative z-10">
-
-        {/* ────────────────────────────────────────────────────
-            OUR OFFERINGS — image cards (Suzlon "Our Offerings")
-        ──────────────────────────────────────────────────── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 pt-24 pb-16">
-
-          {/* Section header */}
-          <div className="mb-12">
-            <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">
-              What We Do
-            </p>
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-              <h2 className="font-bold text-5xl sm:text-6xl text-[#021124] leading-tight max-w-xl">
-                Our Offerings
-              </h2>
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 text-[#05325d] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
-              >
-                View All Services <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+      {/* ═══════ TRUST BAR ═══════ */}
+      <section style={{ background: FROST }}>
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x" style={{ borderColor: "rgba(0,46,93,0.12)" }}>
+            <Counter value={31} suffix="+" label="Projects delivered" source="Across 6 industry sectors" />
+            <Counter value={10} suffix="+" label="Clients" source="India and international" />
+            <Counter value={7} label="Patents" source="Founding team, including work at Apple, Cupertino" />
+            <Counter value={3} label="Proprietary AI platforms live" source="WindVista · URAI · Batch Uploader" />
           </div>
+        </div>
+      </section>
 
-          {/* Block 1: cards 0–4 in exact Suzlon layout
-              Col 1: Card 0 (tall) stacked above Card 3 (short)
-              Col 2: Card 1 (short) stacked above Card 4 (short)
-              Col 3: Card 2 (TALL — spans both rows)
-          */}
-          <div className="offerings-grid">
-            {/* Card 0 — COL 1 ROW 1 (tall-ish) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5 }}
-              className="offerings-c0"
-            >
-              <Link to={`/services#${services[0].slug}`} className="block group">
-                <div className="relative overflow-hidden rounded-2xl h-[290px] cursor-pointer">
-                  <img src={services[0].img} alt={services[0].title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="font-bold text-2xl text-white leading-snug tracking-tight mb-2">{services[0].title}</h3>
-                    <p className="text-white/80 text-sm leading-relaxed">{services[0].description}</p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-
-            {/* Card 1 — COL 2 ROW 1 (short) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.08 }}
-              className="offerings-c1"
-            >
-              <Link to={`/services#${services[1].slug}`} className="block group">
-                <div className="relative overflow-hidden rounded-2xl h-[290px] cursor-pointer">
-                  <img src={services[1].img} alt={services[1].title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-bold text-xl text-white leading-snug mb-1">{services[1].title}</h3>
-                    <p className="text-white/80 text-xs leading-relaxed line-clamp-2">{services[1].description}</p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-
-            {/* Card 2 — COL 3, SPANS BOTH ROWS (the tall card on the right) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.16 }}
-              className="offerings-c2 h-full"
-            >
-              <Link to={`/services#${services[2].slug}`} className="block h-full group">
-                <div className="relative overflow-hidden rounded-2xl h-full cursor-pointer min-h-[290px] lg:min-h-[594px]">
-                  <img src={services[2].img} alt={services[2].title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="font-bold text-2xl text-white leading-snug tracking-tight mb-2">{services[2].title}</h3>
-                    <p className="text-white/80 text-sm leading-relaxed">{services[2].description}</p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-
-            {/* Card 3 — COL 1 ROW 2 (short, stacked below Card 0) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.24 }}
-              className="offerings-c3"
-            >
-              <Link to={`/services#${services[3].slug}`} className="block group">
-                <div className="relative overflow-hidden rounded-2xl h-[290px] cursor-pointer">
-                  <img src={services[3].img} alt={services[3].title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-bold text-xl text-white leading-snug mb-1">{services[3].title}</h3>
-                    <p className="text-white/80 text-xs leading-relaxed line-clamp-2">{services[3].description}</p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-
-            {/* Card 4 — COL 2 ROW 2 (short, stacked below Card 1) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.32 }}
-              className="offerings-c4"
-            >
-              <Link to={`/services#${services[4].slug}`} className="block group">
-                <div className="relative overflow-hidden rounded-2xl h-[290px] cursor-pointer">
-                  <img src={services[4].img} alt={services[4].title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-bold text-xl text-white leading-snug mb-1">{services[4].title}</h3>
-                    <p className="text-white/80 text-xs leading-relaxed line-clamp-2">{services[4].description}</p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          </div>
-
-
-          {/* Card 5 — Full-width bottom card */}
-          <motion.div
-            className="mt-2"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Link to={`/services#${services[5].slug}`} className="block group">
-              <div className="relative overflow-hidden rounded-2xl h-[290px] sm:h-52 cursor-pointer">
-                <img src={services[5].img} alt={services[5].title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                  <div>
-                    <h3 className="font-bold text-xl sm:text-2xl text-white leading-snug mb-1">{services[5].title}</h3>
-                    <p className="text-white/80 text-xs sm:text-sm leading-relaxed max-w-xl line-clamp-2 sm:line-clamp-none">{services[5].description}</p>
-                  </div>
-                  <span className="flex-shrink-0 inline-flex items-center gap-2 text-xs font-semibold text-[#6eb4f7] sm:ml-4 self-start sm:self-auto">
-                    Learn More <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </motion.div>
-
-        </section>
-
-
-        {/* ────────────────────────────────────────────────────
-            STATS — Giant teal numbers (Suzlon trust metrics)
-        ──────────────────────────────────────────────────── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-16 border-t border-[#c8c0aa]">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-[#c8c0aa]">
-            <Counter value={20} suffix="+" label="Projects delivered across wind energy, AI, and geospatial domains" />
-            <Counter value={10} suffix="+" label="Clients served across energy, government, and enterprise sectors" />
-            <Counter value={5} suffix="+" label="Industry sectors covered with domain-specific AI solutions" />
-            <Counter value={7} label="Patents held by our founding technical leadership" />
-          </div>
-
-          {/* CTA row below stats */}
-          <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <Link
-              to="/services"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm tracking-wide transition-colors"
-            >
-              Explore Solutions <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 border border-[#05325d] text-[#05325d] font-semibold text-sm tracking-wide hover:bg-[#05325d] hover:text-white transition-colors"
-            >
-              Contact Us
-            </Link>
-          </div>
-        </section>
-
-        {/* ────────────────────────────────────────────────────
-            PRODUCTS — WindVista showcase
-        ──────────────────────────────────────────────────── */}
-        <section className="bg-[#021124] py-24">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-            {/* Header */}
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
+      {/* ═══════ PROBLEM STATEMENT ═══════ */}
+      <section className="py-24" style={{ background: N }}>
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+            <div className="flex flex-col">
               <div>
-                <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Product Portfolio</p>
-                <h2 className="font-bold text-4xl sm:text-5xl text-white leading-tight">
-                  Proprietary Technologies<br />&amp; Platforms
+                <p className="font-mono-label text-xs tracking-[0.18em] uppercase mb-4" style={{ color: FROST }}>The Real Problem</p>
+                <h2 className="fade-up font-serif-display font-bold leading-tight mb-6"
+                  style={{ fontSize: "clamp(1.8rem, 3.5vw, 3rem)", color: "#ffffff" }}>
+                  Your asset data is fragmented. Your team is reactive. Every unplanned breakdown costs more than it should.
                 </h2>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.62)" }}>
+                  In wind energy, telecom, and infrastructure — the data exists. The sensors are running. The logs are filling up.
+                  But without the intelligence layer to connect, interpret, and act on that data in real time, your engineers
+                  are still making decisions the slow way.
+                </p>
+                <p className="text-sm leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.62)" }}>
+                  Downtime that could have been predicted. Reports that take days. ROI left on the table.
+                </p>
               </div>
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 text-[#6eb4f7] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
-              >
-                All Products <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="mt-auto pt-4">
+                <Link to="/services" className="inline-flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-80" style={{ color: FROST, textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                  See how SIRPI solves this <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
-
-            {/* Featured WindVista 2 */}
-            <div className="mb-6">
-              {products.filter(p => p.featured).map((p, i) => (
-                <div
-                  key={i}
-                  className="group relative border border-white/10 p-8 sm:p-12 flex flex-col md:flex-row justify-between gap-8 hover:border-[#6eb4f7]/40 transition-colors"
-                >
-                  <div className="space-y-4 md:w-2/3">
-                    <div className="flex gap-3 items-center">
-                      <span className="text-[10px] uppercase font-bold text-[#6eb4f7] tracking-widest border border-[#6eb4f7]/30 px-3 py-1">{p.tag}</span>
-                      <span className="text-[10px] uppercase font-bold text-[#f5c842] tracking-widest border border-[#f5c842]/30 px-3 py-1">Latest Version</span>
-                    </div>
-                    <h3 className="font-bold text-4xl sm:text-5xl text-white">{p.name}</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed max-w-xl">{p.desc}</p>
-                  </div>
-                  <div className="flex items-end">
-                    <Link
-                      to={`/products/${p.slug}`}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors"
-                    >
-                      View Details <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
+            <div className="flex flex-col h-full gap-4">
+              {[
+                { tag: "Wind Energy", title: "Fragmented data across systems", body: "Shear, LTT, and WindexGraph live in separate tools. Every report requires manual consolidation — adding hours and introducing error." },
+                { tag: "Telecom &middot; Infrastructure", title: "Reactive maintenance cycles", body: "Without predictive intelligence, outages are discovered after they happen. Every reactive repair costs 3–5× more than a planned intervention." },
+                { tag: "Government &middot; Geospatial", title: "Geospatial data locked in silos", body: "OGC-compliant data hosting remains the exception. Planning teams spend weeks on data-wrangling before any analysis begins." },
+              ].map((c, i) => (
+                <div key={i}
+                  className="fade-up rounded-r-xl p-5 flex-1 flex flex-col justify-center" style={{ borderLeft: `3px solid ${FROST}`, background: "rgba(255,255,255,0.05)" }}>
+                  <span className="font-mono-label text-[11px] uppercase tracking-widest font-bold block mb-2" style={{ color: FROST }}
+                    dangerouslySetInnerHTML={{ __html: c.tag }} />
+                  <h3 className="font-semibold text-base sm:text-lg mb-2" style={{ color: "#ffffff" }}>{c.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>{c.body}</p>
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Secondary products — Suzlon image cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
-              {products.filter(p => !p.featured).map((p, i) => {
-                const imgs = [
-                  'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop',
-                  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
-                  'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
-                  'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
-                ];
-                return (
-                  <Card
-                    key={i}
-                    img={imgs[i % imgs.length]}
-                    title={p.name}
-                    description={p.desc}
-                    tag={p.tag}
-                    link={`/products/${p.slug}`}
-                    height="h-64"
-                    gradient="strong"
-                  />
-                );
-              })}
+      {/* ═══════ PRODUCTS IN ACTION — compact 3-card strip ═══════ */}
+      <section className="py-20" style={{ background: FROST }}>
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+
+          {/* Header */}
+          <div className="mb-10">
+            <p className="font-mono-label text-xs tracking-[0.18em] uppercase mb-3" style={{ color: INK }}>Products in Action</p>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+              <h2 className="fade-up font-serif-display font-bold leading-tight" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", color: N }}>
+                Built for the complexity of your domain.
+              </h2>
+              <Link to="/products"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold flex-shrink-0"
+                style={{ color: N, textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                Explore the full product portfolio <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
-        </section>
 
-        {/* ────────────────────────────────────────────────────
-            INDUSTRIES — Suzlon image card grid
-        ──────────────────────────────────────────────────── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-t border-[#c8c0aa]">
-          {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
-            <div>
-              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Vertical Solutions</p>
-              <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] leading-tight">
-                Deep Domain<br />Expertise
-              </h2>
+          {/* 3-card strip */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {PRODUCTS.map((p, i) => (
+              <div key={i} className="fade-up rounded-xl p-6 border flex flex-col gap-4"
+                style={{ background: "#ffffff", borderColor: "rgba(0,46,93,0.1)" }}>
+                {/* Tag pill */}
+                <span className="font-mono-label text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full self-start"
+                  style={{ color: INK, background: "#E8E5DF" }}>
+                  {p.tag}
+                </span>
+                {/* Name */}
+                <h3 className="font-serif-display font-bold text-base leading-snug" style={{ color: N }}>
+                  {p.name}
+                </h3>
+                {/* Outcome sentence */}
+                <p className="text-sm leading-relaxed flex-1 text-justify" style={{ color: "#5a7a9f" }}>
+                  {p.sentence}
+                </p>
+                {/* Text link */}
+                <Link to={p.href}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold mt-auto"
+                  style={{ color: N, textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                  Learn More <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ INDUSTRIES MARQUEE ═══════ */}
+      <section className="overflow-hidden"
+        style={{ padding: "3.5rem 0", background: N }}>
+        {/* Section header */}
+        <div className="text-center px-6" style={{ marginBottom: "36px" }}>
+          <p className="font-mono-label uppercase"
+            style={{ fontSize: "22px", fontWeight: 700, letterSpacing: "0.15em", color: FROST, marginBottom: "14px" }}>
+            Industries We Serve
+          </p>
+          <h2 className="font-serif-display"
+            style={{ fontSize: "36px", fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "12px" }}>
+            Deep expertise. Every domain.
+          </h2>
+          <p style={{ fontSize: "15px", color: "#C8D4E3", lineHeight: 1.7, maxWidth: "540px", margin: "0 auto 10px" }}>
+            From wind farms to government infrastructure — SIRPI delivers across the domains that matter most.
+          </p>
+        </div>
+
+        {/* Marquee */}
+        <div className="marquee-wrapper">
+          <div className="marquee-outer"
+            ref={marqueeRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => (isHovered.current = true)}
+            onTouchStart={() => (isHovered.current = true)}
+            onTouchEnd={() => (isHovered.current = false)}>
+            <div className="marquee-track">
+              {/* Card set 1 */}
+              {DOMAINS.map((d, i) => (
+                <React.Fragment key={`a-${i}`}>
+                  <div className="domain-card">
+                    <div className="card-bg" style={{ backgroundImage: `url('${d.bgImage}')` }}></div>
+                    <div className="card-overlay"></div>
+                    <div className="card-content">
+                      <div className="card-text-wrapper">
+                        <p className="card-name">{d.name}</p>
+                        <p className="card-outcome">{d.outcome}</p>
+                        <p className="card-desc">{d.desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ))}
+              {/* Card set 2 — duplicate for seamless loop */}
+              {DOMAINS.map((d, i) => (
+                <React.Fragment key={`b-${i}`}>
+                  <div className="domain-card">
+                    <div className="card-bg" style={{ backgroundImage: `url('${d.bgImage}')` }}></div>
+                    <div className="card-overlay"></div>
+                    <div className="card-content">
+                      <div className="card-text-wrapper">
+                        <p className="card-name">{d.name}</p>
+                        <p className="card-outcome">{d.outcome}</p>
+                        <p className="card-desc">{d.desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
-            <Link
-              to="/industries"
-              className="inline-flex items-center gap-2 text-[#05325d] font-semibold text-sm tracking-wide hover:gap-3 transition-all"
-            >
-              See All Industries <ArrowRight className="w-4 h-4" />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ HOW WE WORK ═══════ */}
+      <section className="py-24" style={{ background: FROST }}>
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="text-center mb-16">
+            <p className="font-mono-label text-xs tracking-[0.18em] uppercase mb-3" style={{ color: INK }}>Engagement Model</p>
+            <h2 className="fade-up font-serif-display font-bold" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: N }}>How We Work</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { num: "01", step: "Understand", icon: <Database className="w-6 h-6" />, body: "We start with your data environment — not a generic framework. One conversation to map your problem, your stack, and your decision-making bottlenecks." },
+              { num: "02", step: "Build", icon: <Cpu className="w-6 h-6" />, body: "Our engineers develop a purpose-built solution: product integration, custom model, or geospatial pipeline. No off-the-shelf retrofitting." },
+              { num: "03", step: "Deploy", icon: <BarChart2 className="w-6 h-6" />, body: "We deliver to your environment — on-premise, cloud, or hybrid — with documentation, audit trails, and a handover your team can actually use." },
+            ].map((s, i) => (
+              <div key={i}
+                className="fade-up rounded-xl p-8 border flex flex-col h-full" style={{ background: "#ffffff", borderColor: "rgba(0,46,93,0.1)" }}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: "rgba(0,46,93,0.1)", color: N }}>
+                    {s.icon}
+                  </div>
+                  <span className="font-mono-label text-xs font-bold" style={{ color: "rgba(0,46,93,0.35)" }}>{s.num}</span>
+                </div>
+                <h3 className="font-serif-display font-bold text-xl mb-3" style={{ color: N }}>{s.step}</h3>
+                <p className="text-sm leading-relaxed text-justify flex-1" style={{ color: "#5a7a9f" }}>{s.body}</p>
+                {i < 2 && (
+                  <div className="mt-6 flex justify-end">
+                    <ArrowRight className="w-4 h-4" style={{ color: INK, opacity: 0.4 }} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ WHY SIRPI ═══════ */}
+      <section className="py-24" style={{ background: N }}>
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="mb-12">
+            <p className="font-mono-label text-xs tracking-[0.18em] uppercase mb-3" style={{ color: FROST }}>Why SIRPI</p>
+            <h2 className="fade-up font-serif-display font-bold leading-tight mb-3" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", color: "#ffffff" }}>
+              Built different. On purpose.
+            </h2>
+            <p className="text-sm max-w-lg" style={{ color: "rgba(255,255,255,0.65)" }}>
+              We're not a generic software vendor. Here's what that means for you.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {DIFFERENTIATORS.map((d, i) => (
+              <div key={i} className="fade-up rounded-lg p-6 border flex flex-col h-full"
+                style={{ background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.1)" }}>
+                {/* Icon in navy-tinted square */}
+                <div className="w-8 h-8 rounded-md flex items-center justify-center mb-4 flex-shrink-0"
+                  style={{ background: "rgba(255,255,255,0.1)", color: FROST }}>
+                  {d.icon}
+                </div>
+                <h3 className="font-semibold text-sm mb-2 leading-snug md:min-h-[40px]" style={{ color: "#ffffff" }}>{d.title}</h3>
+                <p className="text-xs leading-relaxed text-justify flex-1" style={{ color: "rgba(255,255,255,0.7)" }}>{d.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ ACADEMY SPOTLIGHT ═══════ */}
+      <section className="py-10 border-y" style={{ background: FROST, borderColor: "rgba(0,46,93,0.1)" }}>
+        <div className="fade-up max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: N }}>
+              <Brain className="w-5 h-5" style={{ color: FROST }} />
+            </div>
+            <div>
+              <p className="font-mono-label text-[10px] uppercase tracking-widest mb-0.5" style={{ color: N }}>SIRPI Academy</p>
+              <p className="font-semibold text-sm" style={{ color: N }}>Training the next generation of AI engineers.</p>
+            </div>
+          </div>
+          <Link to="/about#academy"
+            className="inline-flex items-center gap-1.5 text-sm font-medium flex-shrink-0 transition-all"
+            style={{ color: N, textDecoration: "underline", textUnderlineOffset: "3px" }}>
+            Partner with the Academy <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ═══════ FINAL CTA ═══════ */}
+      <section className="py-28" style={{ background: N }}>
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="max-w-2xl mb-20">
+            <p className="font-mono-label text-xs tracking-[0.18em] uppercase mb-4" style={{ color: FROST }}>Ready to Start</p>
+            <h2 className="fade-up font-serif-display font-bold leading-tight mb-6"
+              style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)", color: "#ffffff" }}>
+              Your problem is our<br />
+              <span style={{ color: "#ffffff", fontWeight: 700 }}>next solution.</span>
+            </h2>
+            <p className="text-base leading-relaxed mb-8 max-w-lg" style={{ color: "rgba(255,255,255,0.62)" }}>
+              Speak directly with our engineering leaders. We specialise in tailoring AI, geospatial, and wind energy solutions for enterprise and government organisations.
+            </p>
+            <Link to="/contact?type=demo"
+              className="inline-flex items-center gap-2 px-8 py-4 font-semibold text-sm rounded-md transition-all"
+              style={{ background: FROST, color: N }}>
+              Request a Demo <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          {/* Suzlon image cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1">
-            {industries.map((ind, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
-              >
-                <Card
-                  img={ind.img}
-                  title={ind.name}
-                  description={ind.desc}
-                  link="/industries"
-                  height="h-52"
-                  gradient="strong"
-                  className="w-full"
-                />
-              </motion.div>
-            ))}
+          <div className="border-t pt-12" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+            <h3 className="font-serif-display font-bold text-2xl mb-2" style={{ color: "#ffffff" }}>Get Enterprise AI &amp; Geospatial Insights</h3>
+            <p className="text-sm mb-6 max-w-lg" style={{ color: "rgba(255,255,255,0.65)" }}>
+              Receive exclusive engineering whitepapers and wind energy analytics updates directly to your inbox.
+            </p>
+            <form className="flex flex-col sm:flex-row gap-3 max-w-lg" onSubmit={e => e.preventDefault()}>
+              <input type="email" placeholder="Enter work email" required
+                className="flex-1 px-5 py-3 text-sm rounded-md outline-none"
+                style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#ffffff" }} />
+              <button type="submit"
+                className="px-6 py-3 font-semibold text-sm rounded-md border transition-all"
+                style={{ borderColor: "rgba(255,255,255,0.4)", color: "#ffffff", background: "transparent" }}>
+                Subscribe
+              </button>
+            </form>
           </div>
-        </section>
-
-        {/* ────────────────────────────────────────────────────
-            AI PIPELINE — workflow steps
-        ──────────────────────────────────────────────────── */}
-        <section className="bg-[#eee8da] py-24">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-              {/* Left */}
-              <div>
-                <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Operational Pipeline</p>
-                <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] leading-tight mb-8">
-                  AI Innovation &amp;<br />Analytical Pipeline
-                </h2>
-                <p className="text-[#555] text-sm leading-relaxed mb-10">
-                  Our scalable core processes handle data end-to-end, converting raw imagery and metrics into dynamic business predictions.
-                </p>
-                <div className="space-y-0 divide-y divide-[#c8c0aa] border-y border-[#c8c0aa]">
-                  {workflowSteps.map((step, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveWorkflow(idx)}
-                      className={`w-full text-left py-5 flex items-center justify-between group transition-colors ${activeWorkflow === idx ? 'bg-transparent' : 'hover:bg-[#f5f0e8]'
-                        }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <span
-                          className={`w-8 h-8 flex items-center justify-center text-xs font-bold transition-colors ${activeWorkflow === idx
-                            ? 'bg-[#05325d] text-white'
-                            : 'border border-[#c8c0aa] text-[#777]'
-                            }`}
-                        >
-                          {String(idx + 1).padStart(2, '0')}
-                        </span>
-                        <span className={`font-semibold text-base ${activeWorkflow === idx ? 'text-[#05325d]' : 'text-[#021124]'}`}>
-                          {step.title}
-                        </span>
-                      </div>
-                      <ArrowRight className={`w-4 h-4 transition-all ${activeWorkflow === idx ? 'text-[#05325d] translate-x-1' : 'text-[#c8c0aa]'}`} />
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right visualization */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeWorkflow}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white p-10 flex flex-col justify-center items-center text-center min-h-[380px] border border-[#c8c0aa]"
-                >
-                  <div className="w-20 h-20 bg-[#f5f0e8] border border-[#c8c0aa] flex items-center justify-center mb-8">
-                    {activeWorkflow === 0 && <Database className="w-10 h-10 text-[#05325d]" />}
-                    {activeWorkflow === 1 && <Cpu className="w-10 h-10 text-[#05325d]" />}
-                    {activeWorkflow === 2 && <BarChart2 className="w-10 h-10 text-[#05325d]" />}
-                    {activeWorkflow === 3 && <CheckCircle className="w-10 h-10 text-[#05325d]" />}
-                  </div>
-                  <h4 className="font-bold text-2xl text-[#021124] mb-4">{workflowSteps[activeWorkflow].title}</h4>
-                  <p className="text-[#555] text-sm leading-relaxed max-w-xs">{workflowSteps[activeWorkflow].desc}</p>
-
-                  {/* Step dots */}
-                  <div className="flex gap-2 mt-10">
-                    {workflowSteps.map((_, d) => (
-                      <span
-                        key={d}
-                        className={`h-1 rounded-full transition-all duration-300 ${activeWorkflow === d ? 'w-8 bg-[#05325d]' : 'w-2 bg-[#c8c0aa]'}`}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </section>
-
-        {/* ────────────────────────────────────────────────────
-            LEADERSHIP — Founder section
-        ──────────────────────────────────────────────────── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-t border-[#c8c0aa]">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-[#c8c0aa]">
-            {/* Image */}
-            <div className="relative bg-[#021124] flex items-center justify-center p-12 min-h-[400px]">
-              <div className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-[#6eb4f7]/30">
-                <img src="/founder.jpeg" alt="Dr. Anand Lakshmanan" className="w-full h-full object-cover" />
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-10 sm:p-14 flex flex-col justify-center bg-white">
-              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Leadership</p>
-              <h2 className="font-bold text-3xl sm:text-4xl text-[#021124] mb-2">Dr. Anand Lakshmanan</h2>
-              <p className="text-[#05325d] text-sm font-semibold tracking-wide mb-6">Founder &amp; CEO</p>
-              <p className="text-[#555] text-sm leading-relaxed mb-8">
-                Dr. Anand Lakshmanan has 27 years of experience in academia and industry, having designed experiments and analysed data across various domains. Most recently, he worked at Apple in Cupertino, California as an Antenna Design Engineer for 6 years, and holds 7 patents. He founded SIRPI on the belief that all professionals need to be data-savvy to make informed decisions.
-              </p>
-              <div className="grid grid-cols-2 gap-6 border-t border-[#e0d8cc] pt-6">
-                <div>
-                  <p className="text-xs text-[#777] uppercase tracking-wider mb-1">Focus</p>
-                  <p className="text-sm font-semibold text-[#021124]">AI Algorithms &amp; Geospatial Engineering</p>
-                </div>
-                <div>
-                  <p className="text-xs text-[#777] uppercase tracking-wider mb-1">Mission</p>
-                  <p className="text-sm font-semibold text-[#021124]">Trustworthy Decision Intelligence</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-
-        {/* ────────────────────────────────────────────────────
-            FINAL CTA — dark navy (matches Product Portfolio)
-        ──────────────────────────────────────────────────── */}
-        <section className="bg-[#021124] py-28">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-            <div className="max-w-2xl">
-              <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Get Started</p>
-              <h2 className="font-bold text-5xl sm:text-6xl text-white leading-tight mb-6">
-                Ready to Transform<br />Your Data Into<br />
-                <span className="text-[#6eb4f7]">Decisions?</span>
-              </h2>
-              <p className="text-slate-400 text-base leading-relaxed mb-10 max-w-lg">
-                Speak directly with our engineering leaders. We specialise in tailoring custom AI, geospatial, and wind energy solutions for enterprise organisations.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  to="/contact?type=consultation"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm tracking-wide transition-colors"
-                >
-                  Book a Consultation <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/30 text-white font-semibold text-sm tracking-wide hover:bg-white/10 transition-colors"
-                >
-                  Contact Team
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
+        </div>
+      </section>
     </>
   );
 };

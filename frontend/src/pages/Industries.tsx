@@ -1,143 +1,366 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Wind, Globe, Cpu, Heart, Factory, Building, Search } from 'lucide-react';
-import SEO from '../components/SEO';
-import Card from '../components/Card';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import SEO from "../components/SEO";
+
+const N = "#002E5D";
+const CREAM = "#f0f5ff";
+const FROST = "#F0F4FA";
+const INK_MUTED = "#5a7a9f";
+const INK = "#0A1628";
+const ACCENT = "#8A9BB5";
+
+const CTAButton = () => (
+  <Link
+    to="/contact?type=demo"
+    className="inline-flex items-center gap-2 px-8 py-4 rounded-md font-semibold text-base transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+    style={{ background: N, color: FROST, border: "1px solid rgba(255,255,255,0.2)" }}
+  >
+    Start a Conversation <ArrowRight className="w-5 h-5" />
+  </Link>
+);
+
+const ProblemBlock = ({ headline, body, cards }: { headline: string, body: string, cards: {title: string, tag: string, body?: string}[] }) => (
+  <section style={{ background: CREAM, padding: "5rem 3rem" }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 420px), 1fr))", gap: 48 }}>
+      <div>
+        <h2 style={{ fontFamily: "Georgia, serif", fontSize: 32, fontWeight: 700, color: N, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 20 }}>
+          {headline}
+        </h2>
+        <p style={{ fontSize: 16, color: INK_MUTED, lineHeight: 1.8 }}>
+          {body}
+        </p>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        {cards.map((c, i) => (
+          <div key={i} style={{ background: "#fff", borderLeft: `2px solid ${N}`, borderRadius: "0 8px 8px 0", padding: "1.1rem 1.3rem", border: "0.5px solid #E0DDD6" }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: N, textTransform: "uppercase", letterSpacing: "0.08em", background: "rgba(0,46,93,0.06)", border: "0.5px solid rgba(0,46,93,0.12)", padding: "2px 8px", borderRadius: 4, display: "inline-block", marginBottom: 8 }}>
+              {c.tag}
+            </span>
+            <p style={{ fontSize: 15, fontWeight: 600, color: N, margin: 0, marginBottom: c.body ? 6 : 0 }}>
+              "{c.title}"
+            </p>
+            {c.body && (
+              <p style={{ fontSize: 14, color: INK_MUTED, margin: 0, lineHeight: 1.5 }}>
+                {c.body}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const DeliverBlock = ({ headline, items }: { headline: string, items: (string | {title: string, desc: string})[] }) => (
+  <section style={{ background: INK, padding: "5rem 3rem" }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <h2 style={{ fontFamily: "Georgia, serif", fontSize: 36, fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 44 }}>
+        {headline}
+      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))", gap: 24 }}>
+        {items.map((item, i) => (
+          <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+            <div style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(240,244,250,0.06)", border: "0.5px solid rgba(240,244,250,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <CheckCircle2 size={16} color={FROST} />
+            </div>
+            <div>
+              {typeof item === "string" ? (
+                <p style={{ fontSize: 16, color: FROST, marginTop: 4, fontWeight: 500 }}>{item}</p>
+              ) : (
+                <>
+                  <p style={{ fontSize: 16, color: FROST, marginTop: 4, fontWeight: 600 }}>{item.title}</p>
+                  <p style={{ fontSize: 14, color: ACCENT, marginTop: 6, lineHeight: 1.5 }}>{item.desc}</p>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const ProofBlock = ({ quote, tag, topPadding = "5rem" }: { quote: string, tag: string, topPadding?: string }) => (
+  <section style={{ background: CREAM, padding: `${topPadding} 3rem 5rem 3rem` }}>
+    <div style={{ maxWidth: 680, margin: "0 auto" }}>
+      <div style={{ borderLeft: `3px solid ${N}`, paddingLeft: "1.5rem" }}>
+        <p style={{ fontSize: 18, fontWeight: 600, color: N, lineHeight: 1.6, marginBottom: 16 }}>
+          "{quote}"
+        </p>
+        <span style={{ fontSize: 11, fontWeight: 700, color: N, background: "rgba(0,46,93,0.06)", border: "0.5px solid rgba(0,46,93,0.12)", padding: "4px 10px", borderRadius: 4, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          {tag}
+        </span>
+      </div>
+    </div>
+  </section>
+);
+
+const TABS = [
+  "Wind Energy",
+  "Telecom",
+  "Healthcare",
+  "Manufacturing",
+  "Government",
+  "Research"
+];
 
 const Industries: React.FC = () => {
-  const industries = [
-    {
-      icon: <Wind className="w-6 h-6 text-white" />,
-      name: 'Wind Energy',
-      img: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop',
-      challenge: 'High wake interference and complex terrain geometry reduce annual energy output and cause unpredictability in grid integration.',
-      solution: 'We apply microscale spatial resource modelling inside our WindVista analytics engine to compute optimal turbine coordinates.',
-      outcome: '+4.2% AEP boost on mountainous terrains and 15% reduction in rotor load stress deviations.',
-    },
-    {
-      icon: <Cpu className="w-6 h-6 text-white" />,
-      name: 'Telecom',
-      img: 'https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?q=80&w=800&auto=format&fit=crop',
-      challenge: 'Manual planning of wireless network expansions is slow, prone to signal interference, and struggles to integrate census datasets.',
-      solution: 'We build automated geospatial site planning tools utilising elevation vector meshes and local population density charts.',
-      outcome: 'Outage routing simulations completed in minutes rather than days, with 98% coverage simulation accuracy.',
-    },
-    {
-      icon: <Heart className="w-6 h-6 text-white" />,
-      name: 'Healthcare',
-      img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop',
-      challenge: 'Medical image analysis datasets are massive and require manual annotations, adding backlogs to radiology diagnostics.',
-      solution: 'We build secure local semantic classification pipelines that automatically detect anomalies and generate report summaries.',
-      outcome: 'Radiologist diagnostic support latency reduced by 35%, ensuring high diagnostic throughput.',
-    },
-    {
-      icon: <Factory className="w-6 h-6 text-white" />,
-      name: 'Manufacturing',
-      img: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop',
-      challenge: 'Sudden heavy equipment downtime in metal stamp assembly lines causes high losses in supply chain cycles.',
-      solution: 'We execute time-series anomaly detection algorithms using high-frequency vibrational and temperature sensor records.',
-      outcome: 'Alert notifications sent to repair technicians 14 hours in advance, decreasing assembly line downtime by 40%.',
-    },
-    {
-      icon: <Building className="w-6 h-6 text-white" />,
-      name: 'Government',
-      img: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800&auto=format&fit=crop',
-      challenge: 'Dispersed regional GIS planning portals load slowly and crash under high concurrent map requests during planning cycles.',
-      solution: 'We replace heavy GIS middleware layers with optimised vector tile engines using Go parallel coordinate calculators.',
-      outcome: 'Map loading latency reduced from seconds to sub-50ms, with zero tile rendering gaps under peak traffic.',
-    },
-    {
-      icon: <Search className="w-6 h-6 text-white" />,
-      name: 'Research',
-      img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop',
-      challenge: 'Scientific groups are overwhelmed by millions of PDF research pages, slowing data-mining of chemical and geological formulas.',
-      solution: 'We build local, isolated semantic retrieval agents (URAI) that digest specialised paper archives and answer queries.',
-      outcome: 'Literature review cycles automated, cutting research lookup durations from days to seconds.',
-    },
-  ];
+  const [activeTab, setActiveTab] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    const tabMap: Record<string, number> = {
+      'wind-energy': 0,
+      'telecom': 1,
+      'healthcare': 2,
+      'manufacturing': 3,
+      'government': 4,
+      'research': 5
+    };
+    
+    if (hash in tabMap) {
+      setActiveTab(tabMap[hash]);
+    }
+  }, [location.hash]);
 
   return (
     <>
       <SEO
-        title="Industries We Serve"
+        title="Industries We Serve — SIRPI Technologies"
         description="Discover how SIRPI Technologies provides AI, GIS, and telemetry algorithms across wind energy, telecom, healthcare, manufacturing, government, and research."
       />
 
-      <div className="bg-[#f5f0e8]">
-
-        {/* ── PAGE HEADER ── */}
-        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
-          <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Target Sectors</p>
-            <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
-              Industry Vertical<br />
-              <span className="text-[#6eb4f7]">Impact</span>
+      {/* ── HERO ── */}
+      <section style={{ background: INK, minHeight: 400, display: "flex", alignItems: "center", paddingTop: "6rem", position: "relative" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 3rem 4rem 3rem", width: "100%" }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: FROST, marginBottom: 14 }}>
+              TARGET SECTORS
+            </p>
+            <h1 style={{ fontFamily: "Georgia, serif", fontWeight: 700, fontSize: "clamp(36px, 4.5vw, 52px)", color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 680, marginBottom: 20 }}>
+              Industry Vertical Impact.
             </h1>
-            <p className="text-slate-300 text-base leading-relaxed mt-6 max-w-xl">
+            <p style={{ fontSize: 16, color: ACCENT, maxWidth: 560, lineHeight: 1.75, marginBottom: 36 }}>
               We apply our custom ML engines, OGC servers, and forecasting models to address specialised problems for complex industries.
             </p>
-          </div>
-        </section>
+            <CTAButton />
+          </motion.div>
+        </div>
+      </section>
 
-        {/* ── INDUSTRY GRID — Full-bleed cards ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-1">
-            {industries.map((ind, i) => (
-              <div
-                key={i}
-                id={ind.name.toLowerCase().replace(/\s+/g, '-')}
-                className="group scroll-mt-24"
-              >
-                {/* Image card */}
-                <Card
-                  img={ind.img}
-                  title={ind.name}
-                  description={ind.outcome}
-                  icon={ind.icon}
-                  height="h-80"
-                  gradient="strong"
-                  className="w-full"
-                />
+      {/* ── TABS NAVIGATION ── */}
+      <section style={{ background: INK, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 3rem", display: "flex", gap: "2.5rem", overflowX: "auto", scrollbarWidth: "none" }}>
+          {TABS.map((tab, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveTab(i)}
+              style={{
+                background: "none",
+                border: "none",
+                padding: "1.5rem 0",
+                color: activeTab === i ? FROST : ACCENT,
+                fontWeight: activeTab === i ? 600 : 400,
+                borderBottom: activeTab === i ? `2px solid ${FROST}` : "2px solid transparent",
+                cursor: "pointer",
+                fontSize: "15px",
+                transition: "all 0.2s",
+                whiteSpace: "nowrap"
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </section>
 
-                {/* Detail panel beneath the card */}
-                <div className="bg-white border-l-4 border-[#05325d]">
-                  <div className="px-6 py-5 space-y-3 border-b border-[#eee]">
-                    <div>
-                      <p className="text-[10px] uppercase font-bold text-red-500 tracking-widest mb-1">The Challenge</p>
-                      <p className="text-[#555] text-sm leading-relaxed">{ind.challenge}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] uppercase font-bold text-[#05325d] tracking-widest mb-1">Our Solution</p>
-                      <p className="text-[#555] text-sm leading-relaxed">{ind.solution}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* ── TAB CONTENT ── */}
+      <AnimatePresence mode="wait">
+        {activeTab === 0 && (
+          <motion.div key="tab0" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            <ProblemBlock
+              headline="High wake interference and complex terrain geometry reduce annual energy output."
+              body="Unpredictability in grid integration due to these factors makes wind energy operations highly inefficient and reactive without proper modelling."
+              cards={[
+                { title: "Wake Interference", tag: "Operations" },
+                { title: "Complex Terrains", tag: "Planning" },
+                { title: "Grid Unpredictability", tag: "Integration" },
+              ]}
+            />
+            <DeliverBlock
+              headline="What SIRPI builds for Wind Energy."
+              items={[
+                "Microscale Spatial Resource Modelling",
+                "WindVista Analytics Engine",
+                "Optimal Turbine Coordination",
+                "Rotor Load Stress Reduction",
+                "Mountainous Terrain AEP Boosting"
+              ]}
+            />
+            <ProofBlock
+              quote="SIRPI's wind energy solutions centralise asset performance data, automate shear and LTT analysis, and deliver the spatial intelligence needed to optimise turbine output across complex terrain — reducing the time from data to operational decision."
+              tag="Wind Energy · Spatial Analytics"
+            />
+          </motion.div>
+        )}
 
-        {/* ── CTA ── */}
-        <section className="bg-[#021124] py-20">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-            <h2 className="font-bold text-4xl sm:text-5xl text-white mb-6">
-              Is your industry listed?
-            </h2>
-            <p className="text-slate-300 text-sm leading-relaxed mb-8 max-w-xl">
-              If you don't see your sector above, we still have the data science and engineering toolkit to help you. Reach out and let's explore together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors">
-                Talk to an Engineer <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link to="/services" className="inline-flex items-center gap-2 px-8 py-4 border border-white/30 text-white font-semibold text-sm hover:bg-white/10 transition-colors">
-                View Services
-              </Link>
-            </div>
-          </div>
-        </section>
+        {activeTab === 1 && (
+          <motion.div key="tab1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            <ProblemBlock
+              headline="Manual planning of wireless network expansions is slow and prone to signal interference."
+              body="Without automated mapping and census integration, network expansion planning relies on guesswork, leading to poor coverage and long operational delays."
+              cards={[
+                { title: "Manual Network Planning", tag: "Expansion" },
+                { title: "Signal Interference", tag: "Quality" },
+                { title: "Siloed Census Data", tag: "Data" },
+              ]}
+            />
+            <DeliverBlock
+              headline="What SIRPI builds for Telecom."
+              items={[
+                "Automated Geospatial Site Planning",
+                "Elevation Vector Meshes",
+                "Local Population Density Charts",
+                "Outage Routing Simulations",
+                "Coverage Quality Projections"
+              ]}
+            />
+            <ProofBlock
+              quote="SIRPI's automated geospatial site planning tools replace manual network expansion workflows with data-driven coverage modelling — enabling faster, more accurate planning decisions across complex urban and rural terrain."
+              tag="Telecom · Network Optimisation"
+            />
+          </motion.div>
+        )}
 
-      </div>
+        {activeTab === 2 && (
+          <motion.div key="tab2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            <ProblemBlock
+              headline="Medical image datasets are massive and backlogging diagnostics."
+              body="Manual annotations are required for vast amounts of diagnostic imaging, significantly slowing down radiologists and affecting patient throughput."
+              cards={[
+                { title: "Massive Dataset Processing", tag: "Data" },
+                { title: "Manual Image Annotations", tag: "Workload" },
+                { title: "Diagnostic Backlogs", tag: "Speed" },
+              ]}
+            />
+            <DeliverBlock
+              headline="What SIRPI builds for Healthcare."
+              items={[
+                "Secure Local Classification Pipelines",
+                "Semantic Image Analysis",
+                "Automated Anomaly Detection",
+                "Diagnostic Report Generation",
+                "High-Throughput Processing"
+              ]}
+            />
+            <ProofBlock
+              quote="SIRPI's medical imaging pipelines reduce diagnostic processing backlogs by automating image classification and anomaly detection — enabling faster radiologist review across high-volume clinical datasets."
+              tag="Healthcare · Image Analytics"
+            />
+          </motion.div>
+        )}
+
+        {activeTab === 3 && (
+          <motion.div key="tab3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            <ProblemBlock
+              headline="Sudden heavy equipment downtime causes high supply chain losses."
+              body="Reactive maintenance in metal stamp assembly lines and other intensive manufacturing setups creates unpredictable operational standstills."
+              cards={[
+                { title: "Unplanned Equipment Downtime", tag: "Operations" },
+                { title: "Supply Chain Bottlenecks", tag: "Logistics" },
+                { title: "Reactive Repair Cycles", tag: "Maintenance" },
+              ]}
+            />
+            <DeliverBlock
+              headline="What SIRPI builds for Manufacturing."
+              items={[
+                "Time-Series Anomaly Detection",
+                "High-Frequency Sensor Integration",
+                "Vibrational & Temperature Analytics",
+                "Predictive Maintenance Alerts",
+                "Assembly Line Optimization"
+              ]}
+            />
+            <ProofBlock
+              quote="SIRPI's computer vision and predictive maintenance systems detect equipment anomalies before they become failures — reducing unplanned downtime and improving operational throughput on the shop floor."
+              tag="Manufacturing · Predictive Maintenance"
+            />
+          </motion.div>
+        )}
+
+        {activeTab === 4 && (
+          <motion.div key="tab4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            <ProblemBlock
+              headline="Dispersed regional GIS planning portals load slowly and crash."
+              body="Under high concurrent map requests during planning cycles, legacy GIS middleware fails to deliver the performance needed for effective public infrastructure management."
+              cards={[
+                { title: "Slow Loading Portals", tag: "Performance" },
+                { title: "Legacy GIS Middleware", tag: "Tech Stack" },
+                { title: "Concurrent Request Crashes", tag: "Scale" },
+              ]}
+            />
+            <DeliverBlock
+              headline="What SIRPI builds for Government."
+              items={[
+                "Optimised Vector Tile Engines",
+                "Parallel Coordinate Calculators (Go)",
+                "Middleware Layer Replacement",
+                "High-Concurrency Architectures",
+                "OGC Compliant Servers"
+              ]}
+            />
+            <ProofBlock
+              quote="SIRPI's OGC-compliant geospatial platforms and digital public infrastructure solutions turn static government data into live, queryable intelligence for planning, governance, and public service delivery."
+              tag="Government · Digital Infrastructure"
+            />
+          </motion.div>
+        )}
+
+        {activeTab === 5 && (
+          <motion.div key="tab5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            <ProblemBlock
+              headline="Research data is large, complex, and rarely analysis-ready."
+              body="Academic and institutional research programmes generate vast amounts of raw data — genomics, imaging, biophysics simulations — that require specialised computational pipelines before they can be meaningfully analysed. SIRPI builds the data infrastructure and AI tools that make large-scale research data work."
+              cards={[
+                { title: "Massive, unstructured research datasets", tag: "Data", body: "Raw research data without processing pipelines cannot be queried or analysed at scale." },
+                { title: "Computational bottlenecks", tag: "Processing", body: "Complex simulations and imaging workloads exceed the capacity of standard research setups." },
+                { title: "No bridge between data and insight", tag: "Analysis", body: "Without the right analytical layer, research data sits unused in storage." },
+              ]}
+            />
+            <DeliverBlock
+              headline="What SIRPI builds for Research."
+              items={[
+                { title: "Omics Data Processing Pipelines", desc: "Genomics and proteomics data ingestion, cleaning, and analysis infrastructure." },
+                { title: "Medical Imaging AI", desc: "Classification and anomaly detection models for large-scale clinical imaging datasets." },
+                { title: "Molecular Biophysics Support", desc: "Computational infrastructure for biophysics simulation and data analysis workflows." },
+                { title: "Research Data Warehousing", desc: "Structured storage and query systems for multi-modal research datasets." },
+                { title: "Collaborative Data Platforms", desc: "Shared data environments for academic and institutional research teams." },
+                { title: "AI-Assisted Literature & Data Review", desc: "NLP tools for research document processing and knowledge extraction." }
+              ]}
+            />
+            <ProofBlock
+              quote="SIRPI's data science capabilities support research programmes in molecular biophysics, omics data processing, and medical imaging — building the computational infrastructure that makes large-scale research data actionable."
+              tag="Research · Data Science"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── FINAL CTA ── */}
+      <section style={{ background: INK, padding: "6rem 3rem" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 20 }}>
+            Is your industry listed?
+          </h2>
+          <p style={{ fontSize: 16, color: ACCENT, lineHeight: 1.75, marginBottom: 40 }}>
+            If you don't see your sector above, we still have the data science and engineering toolkit to help you. Reach out and let's explore together.
+          </p>
+          <CTAButton />
+        </div>
+      </section>
     </>
   );
 };

@@ -12,23 +12,24 @@ const navItems = [
     name: 'Services',
     path: '/services',
     dropdown: [
-      { label: 'Artificial Intelligence',         path: '/services#artificial-intelligence' },
-      { label: 'Machine Learning',                path: '/services#machine-learning' },
-      { label: 'Data Science',                    path: '/services#data-science' },
-      { label: 'Geospatial Engineering',          path: '/services#geospatial-engineering' },
-      { label: 'Wind Energy Solutions',           path: '/services#wind-energy' },
-      { label: 'Enterprise Software Development', path: '/services#enterprise-development' },
+      { label: 'Wind Energy Solutions',           path: '/services/wind-energy' },
+      { label: 'AI & Machine Learning',           path: '/services/ai-ml' },
+      { label: 'Geospatial Engineering',          path: '/services/geospatial' },
+      { label: 'Data Science & Analytics',        path: '/services/data-science' },
+      { label: 'Enterprise Software',             path: '/services/enterprise-software' },
+      { label: 'Cloud & Digital Transformation',  path: '/services/cloud-transformation' },
     ],
   },
   {
     name: 'Products',
     path: '/products',
     dropdown: [
-      { label: 'Energy Analytics',    path: '/products?cat=Energy+Analytics' },
-      { label: 'Data Management',     path: '/products?cat=Data+Management' },
-      { label: 'Artificial Intelligence', path: '/products?cat=Artificial+Intelligence' },
-      { label: 'Education',           path: '/products?cat=Education' },
-      { label: 'Software Platform',   path: '/products?cat=Software+Platform' },
+      { label: 'WindVista',         path: '/products/windvista' },
+      { label: 'AOP Basic & PRO',   path: '/products/aop' },
+      { label: 'URAI',              path: '/products/urai' },
+      { label: 'BRAID',             path: '/products/braid' },
+      { label: 'CodeToCognition',   path: '/products/code2cognition' },
+      { label: 'AI Tutor',          path: '/products/ai-tutor' },
     ],
   },
   {
@@ -43,17 +44,7 @@ const navItems = [
       { label: 'Research',       path: '/industries#research' },
     ],
   },
-  {
-    name: 'Research',
-    path: '/research',
-    dropdown: [
-      { label: 'Spatial Analytics',   path: '/research#spatial-analytics' },
-      { label: 'Secure ML Ops',       path: '/research#secure-ml-ops' },
-      { label: 'Physics-Guided ML',   path: '/research#physics-guided-ml' },
-      { label: 'Publications',        path: '/research#publications' },
-      { label: 'Patents',             path: '/research#patents' },
-    ],
-  },
+
   { name: 'Careers',    path: '/careers' },
   { name: 'Contact Us', path: '/contact' },
 ];
@@ -112,7 +103,7 @@ const Navbar: React.FC = () => {
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 20);
+      setIsScrolled(currentScrollY > 80);
       if (currentScrollY > lastScrollY && currentScrollY > 200) {
         setIsVisible(false);
         setActiveDropdown(null);
@@ -121,7 +112,7 @@ const Navbar: React.FC = () => {
       }
       lastScrollY = currentScrollY;
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -180,7 +171,7 @@ const Navbar: React.FC = () => {
             <img
               src="/logo/sirpi-logo-white-transparent.png"
               alt="SIRPI - Visualize and Decide"
-              className="h-10 w-auto transition-all"
+              className="h-10 w-auto transition-all brightness-200"
             />
           </Link>
 
@@ -219,19 +210,21 @@ const Navbar: React.FC = () => {
                           onMouseLeave={() => setActiveDropdown(null)}
                           className="absolute top-full left-0 mt-1 min-w-[220px] bg-[#021124]/60 backdrop-blur-md shadow-2xl border border-white/10 rounded-sm z-50 overflow-hidden"
                         >
-                          {item.dropdown.map((sub, idx) => (
-                            <Link
-                              key={idx}
-                              to={sub.path}
-                              className={`block px-5 py-3.5 text-sm font-semibold text-white/80 hover:text-white hover:bg-white/10 transition-colors ${
-                                idx !== item.dropdown!.length - 1
-                                  ? 'border-b border-white/10'
-                                  : ''
-                              }`}
-                            >
-                              {sub.label}
-                            </Link>
-                          ))}
+                          {item.dropdown.map((sub, idx) =>
+                            (sub as any).divider ? (
+                              <div key={idx} style={{ fontSize: 10, fontWeight: 700, color: '#9AA5B4', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '8px 16px 4px', borderTop: idx > 0 ? '1px solid rgba(255,255,255,0.08)' : 'none', marginTop: idx > 0 ? 4 : 0 }}>
+                                {sub.label}
+                              </div>
+                            ) : (
+                              <Link
+                                key={idx}
+                                to={sub.path}
+                                className="block px-5 py-2.5 text-sm font-semibold text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                              >
+                                {sub.label}
+                              </Link>
+                            )
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -430,17 +423,21 @@ const Navbar: React.FC = () => {
                           transition={{ duration: 0.2 }}
                           className="overflow-hidden bg-gray-50"
                         >
-                          {item.dropdown.map((sub, idx) => (
-                            <Link
-                              key={idx}
-                              to={sub.path}
-                              className={`block px-8 py-3.5 text-sm font-semibold text-[#05325d] hover:bg-gray-100 transition-colors ${
-                                idx !== item.dropdown!.length - 1 ? 'border-b border-gray-100' : ''
-                              }`}
-                            >
-                              {sub.label}
-                            </Link>
-                          ))}
+                          {item.dropdown.map((sub, idx) =>
+                            (sub as any).divider ? (
+                              <div key={idx} style={{ fontSize: 10, fontWeight: 700, color: '#9AA5B4', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '10px 32px 4px', borderTop: idx > 0 ? '1px solid #f0f0f0' : 'none' }}>
+                                {sub.label}
+                              </div>
+                            ) : (
+                              <Link
+                                key={idx}
+                                to={sub.path}
+                                className="block px-10 py-3 text-sm font-semibold text-[#05325d] hover:bg-gray-100 transition-colors border-b border-gray-100"
+                              >
+                                {sub.label}
+                              </Link>
+                            )
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>

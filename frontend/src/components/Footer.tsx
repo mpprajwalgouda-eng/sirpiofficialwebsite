@@ -4,37 +4,6 @@ import { Send, CheckCircle, AlertCircle, MapPin, Mail, Phone, ExternalLink } fro
 import { API_BASE_URL } from '../config';
 
 const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState('');
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setStatus('loading');
-    try {
-      const response = await fetch(`${API_BASE_URL}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to subscribe. Please try again.');
-      }
-
-      setStatus('success');
-      setMessage('Successfully subscribed to newsletter!');
-      setEmail('');
-    } catch (err: any) {
-      setStatus('error');
-      setMessage(err.message || 'Something went wrong.');
-    }
-  };
-
   return (
     <footer className="bg-[#080B16] border-t border-white/5 pt-16 pb-8 relative overflow-hidden">
       {/* Background radial glow */}
@@ -48,7 +17,7 @@ const Footer: React.FC = () => {
               <img
                 src="/logo/sirpi-logo-white-transparent.png"
                 alt="SIRPI"
-                className="h-10 w-auto"
+                className="h-10 w-auto brightness-200"
               />
             </Link>
             <p className="text-sirpi-muted text-sm leading-relaxed">
@@ -111,40 +80,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Newsletter Col */}
-          <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-sm font-semibold text-white tracking-wider uppercase font-display">Get Enterprise AI & Geospatial Insights</h4>
-            <p className="text-sirpi-muted text-xs leading-relaxed">
-              Receive exclusive engineering whitepapers and wind energy analytics updates directly to your inbox.
-            </p>
-            <form onSubmit={handleSubscribe} className="relative mt-2">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter work email"
-                className="w-full bg-sirpi-surface/80 border border-white/10 rounded-xl py-2.5 pl-4 pr-10 text-xs text-white placeholder-sirpi-muted focus:outline-none focus:border-sirpi-primary transition-colors focus:ring-1 focus:ring-sirpi-primary"
-              />
-              <button
-                type="submit"
-                disabled={status === 'loading'}
-                className="absolute right-1 top-1 bottom-1 px-3 bg-sirpi-primary rounded-lg text-white hover:bg-sirpi-accent transition-all flex items-center justify-center disabled:opacity-50"
-              >
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </form>
-            {status === 'success' && (
-              <p className="text-emerald-400 text-[11px] flex items-center gap-1">
-                <CheckCircle className="w-3 h-3 flex-shrink-0" /> {message}
-              </p>
-            )}
-            {status === 'error' && (
-              <p className="text-rose-400 text-[11px] flex items-center gap-1">
-                <AlertCircle className="w-3 h-3 flex-shrink-0" /> {message}
-              </p>
-            )}
-          </div>
         </div>
 
         {/* Lower Footer */}

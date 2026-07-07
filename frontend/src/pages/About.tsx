@@ -47,15 +47,15 @@ const About: React.FC = () => {
         description="Learn about the history, mission, vision, values, achievements and leadership team of SIRPI Technologies."
       />
 
-      <div className="bg-[#f5f0e8]">
+      <div className="bg-[#F0F4FA]">
 
         {/* ── PAGE HEADER ── */}
-        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
+        <section className="bg-[#002E5D] pt-32 pb-20 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Who We Are</p>
+            <p className="text-[#F0F4FA] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Who We Are</p>
             <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
               Engineering the Future of<br />
-              <span className="text-[#6eb4f7]">Decision Intelligence</span>
+              <span className="text-[#F0F4FA]">Decision Intelligence</span>
             </h1>
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed mt-6 max-w-2xl">
               Founded by researchers and systems developers, SIRPI Technologies transforms satellite imagery, telemetry, and sensor readings into actionable predictive tools for enterprise organisations.
@@ -64,19 +64,19 @@ const About: React.FC = () => {
         </section>
 
         {/* ── MISSION & VISION ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-b border-[#c8c0aa]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-[#c8c0aa]">
-            <div className="p-10 sm:p-14 border-r border-[#c8c0aa]">
-              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Our Mission</p>
-              <h2 className="font-bold text-2xl sm:text-3xl text-[#021124] mb-4">To Bridge Science and Software</h2>
-              <p className="text-[#555] text-sm leading-relaxed">
+        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-b border-[#002E5D]/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-[#002E5D]/10">
+            <div className="p-10 sm:p-14 md:border-r border-b md:border-b-0 border-[#002E5D]/10 flex flex-col">
+              <p className="text-[#002E5D] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Our Mission</p>
+              <h2 className="font-bold text-2xl sm:text-3xl text-[#002E5D] mb-4 md:min-h-[72px] lg:min-h-[80px]">To Bridge Science and Software</h2>
+              <p className="text-slate-600 text-sm leading-relaxed text-justify flex-1">
                 Our mission is to construct enterprise software environments that make advanced artificial intelligence and geospatial modelling usable, secure, and highly automated. We aim to replace manual spreadsheets and complex workflows with responsive cloud-native dashboards.
               </p>
             </div>
-            <div className="p-10 sm:p-14">
-              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Our Vision</p>
-              <h2 className="font-bold text-2xl sm:text-3xl text-[#021124] mb-4">Trustworthy Automated Infrastructure</h2>
-              <p className="text-[#555] text-sm leading-relaxed">
+            <div className="p-10 sm:p-14 flex flex-col">
+              <p className="text-[#002E5D] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Our Vision</p>
+              <h2 className="font-bold text-2xl sm:text-3xl text-[#002E5D] mb-4 md:min-h-[72px] lg:min-h-[80px]">Trustworthy Automated Infrastructure</h2>
+              <p className="text-slate-600 text-sm leading-relaxed text-justify flex-1">
                 We envision a future where telecommunication networks, green energy infrastructures, and city municipal systems adapt in real-time. By supplying high-frequency decision intelligence engines, SIRPI aims to sit at the core of global automated asset operations.
               </p>
             </div>
@@ -84,21 +84,21 @@ const About: React.FC = () => {
         </section>
 
         {/* ── CORE VALUES ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-b border-[#c8c0aa]">
+        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-b border-[#002E5D]/10">
           <div className="flex flex-col lg:flex-row gap-16">
             <div className="lg:w-1/3">
-              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Our Foundation</p>
-              <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] leading-tight">
+              <p className="text-[#002E5D] text-xs font-semibold tracking-[0.25em] uppercase mb-3">Our Foundation</p>
+              <h2 className="font-bold text-4xl sm:text-5xl text-[#002E5D] leading-tight">
                 Core<br />Operational<br />Values
               </h2>
             </div>
-            <div className="lg:w-2/3 divide-y divide-[#c8c0aa] border-y border-[#c8c0aa]">
+            <div className="lg:w-2/3 divide-y divide-[#002E5D]/10 border-y border-[#002E5D]/10">
               {values.map((v, i) => (
                 <div key={i} className="py-8 flex gap-6 items-start">
-                  <span className="text-2xl font-bold text-[#c8c0aa] mt-1 w-8 shrink-0">0{i + 1}</span>
+                  <span className="text-2xl font-bold text-[#002E5D]/35 mt-1 w-8 shrink-0">0{i + 1}</span>
                   <div>
-                    <h3 className="font-bold text-xl text-[#021124] mb-2">{v.title}</h3>
-                    <p className="text-[#555] text-sm leading-relaxed">{v.description}</p>
+                    <h3 className="font-bold text-xl text-[#002E5D] mb-2">{v.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{v.description}</p>
                   </div>
                 </div>
               ))}
@@ -107,9 +107,9 @@ const About: React.FC = () => {
         </section>
 
         {/* ── TIMELINE — Image cards ── */}
-        <section className="py-24 bg-[#021124]">
+        <section className="py-24 bg-[#002E5D]">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Evolution</p>
+            <p className="text-[#F0F4FA] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Evolution</p>
             <h2 className="font-bold text-4xl sm:text-5xl text-white mb-12">Corporate History</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1">
               {timeline.map((ev, i) => (
@@ -129,19 +129,19 @@ const About: React.FC = () => {
         </section>
 
         {/* ── ACHIEVEMENTS — Image cards ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-b border-[#c8c0aa]">
+        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 border-b border-[#002E5D]/10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left */}
             <div>
-              <p className="text-[#05325d] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Credentials</p>
-              <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-6">Achievements & Standards</h2>
-              <p className="text-[#555] text-sm leading-relaxed mb-8">
+              <p className="text-[#002E5D] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Credentials</p>
+              <h2 className="font-bold text-4xl sm:text-5xl text-[#002E5D] mb-6">Achievements & Standards</h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-8">
                 We design our platforms to meet and exceed global corporate compliance protocols. Information security and standardised data interfaces are treated as core architecture features.
               </p>
               <ul className="space-y-3">
                 {certifications.map((c, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[#021124]">
-                    <CheckCircle className="w-5 h-5 text-[#05325d] flex-shrink-0 mt-0.5" />
+                  <li key={i} className="flex items-start gap-3 text-sm text-[#002E5D]">
+                    <CheckCircle className="w-5 h-5 text-[#002E5D] flex-shrink-0 mt-0.5" />
                     <span>{c}</span>
                   </li>
                 ))}
@@ -168,14 +168,14 @@ const About: React.FC = () => {
 
         {/* ── FINAL CTA ── */}
         <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24">
-          <h2 className="font-bold text-4xl sm:text-5xl text-[#021124] mb-6">
-            Ready to work with <span className="text-[#05325d]">SIRPI?</span>
+          <h2 className="font-bold text-4xl sm:text-5xl text-[#002E5D] mb-6">
+            Ready to work with <span className="text-[#002E5D]">SIRPI?</span>
           </h2>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-[#05325d] hover:bg-[#03203f] text-white font-semibold text-sm transition-colors">
+            <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-[#002E5D] hover:bg-[#0A1628] text-white font-semibold text-sm transition-colors">
               Contact Us <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link to="/services" className="inline-flex items-center gap-2 px-8 py-4 border border-[#05325d] text-[#05325d] font-semibold text-sm hover:bg-[#05325d] hover:text-white transition-colors">
+            <Link to="/services" className="inline-flex items-center gap-2 px-8 py-4 border border-[#002E5D] text-[#002E5D] font-semibold text-sm hover:bg-[#002E5D] hover:text-white transition-colors">
               Explore Services
             </Link>
           </div>
