@@ -44,6 +44,17 @@ const navItems = [
       { label: 'Research',       path: '/industries#research' },
     ],
   },
+  {
+    name: 'Case Studies',
+    path: '/case-studies',
+    dropdownOnly: true,
+    dropdown: [
+      { label: 'WindVista',       path: '/case-studies/windvista' },
+      { label: 'URAI',            path: '/case-studies/urai' },
+      { label: 'AOP Basic & PRO', path: '/case-studies/aop' },
+      { label: 'AI Tutor',        path: '/case-studies/ai-tutor' },
+    ],
+  },
 
   { name: 'Careers',    path: '/careers' },
   { name: 'Contact Us', path: '/contact' },
