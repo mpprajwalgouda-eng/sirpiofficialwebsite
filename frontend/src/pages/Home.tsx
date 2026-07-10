@@ -120,10 +120,10 @@ const PRODUCTS = [
     href: "/products/urai",
   },
   {
-    tag: "Data Pipelines",
-    name: "Batch Uploader",
-    sentence: "Handles bulk data ingestion with built-in validation and automated pipeline triggers — so your data is always clean and ready for analysis.",
-    href: "/products/batch-uploader",
+    tag: "AI Planning",
+    name: "AOP Basic & PRO",
+    sentence: "Simplifies annual operating plan management across Basic and PRO tiers — giving leadership a single dashboard to track AI and business planning in real time.",
+    href: "/products/aop",
   },
 ];
 
@@ -255,7 +255,7 @@ const Home: React.FC = () => {
   return (
     <>
       <SEO
-        title="Turn Engineering Data into Decisions | SIRPI Technologies"
+        title="SIRPI | Products & Technologies"
         description="SIRPI delivers AI-powered products and custom solutions for wind energy, telecom, government, and geospatial environments."
         schema={{ "@context": "https://schema.org", "@type": "Organization", name: "SIRPI Technologies", url: "https://sirpi.io" }}
       />
@@ -314,7 +314,7 @@ const Home: React.FC = () => {
             <Counter value={31} suffix="+" label="Projects delivered" source="Across 6 industry sectors" />
             <Counter value={10} suffix="+" label="Clients" source="India and international" />
             <Counter value={7} label="Patents" source="Founding team, including work at Apple, Cupertino" />
-            <Counter value={3} label="Proprietary AI platforms live" source="WindVista · URAI · Batch Uploader" />
+            <Counter value={3} label="Proprietary AI platforms live" source="WindVista · URAI · AOP" />
           </div>
         </div>
       </section>

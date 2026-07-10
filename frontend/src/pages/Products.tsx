@@ -1,172 +1,209 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Wind, Bot, BarChart2, Network, BookOpen, GraduationCap } from 'lucide-react';
 import SEO from '../components/SEO';
-import Card from '../components/Card';
 
-const categoryImages: Record<string, string> = {
-  'Energy Analytics': 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop',
-  'Data Management': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
-  'Artificial Intelligence': 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
-  'Education': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop',
-  'Software Platform': 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
-};
+const N = '#002E5D';
+const FROST = '#F0F4FA';
+const INK = '#0A1628';
 
-interface ProductItem {
+interface FeaturedProduct {
   slug: string;
   name: string;
-  category: string;
-  shortDesc: string;
+  tag: string;
+  tagline: string;
+  description: string;
+  icon: React.ReactNode;
+  accent: string;
+  href: string;
 }
 
+const FEATURED: FeaturedProduct[] = [
+  {
+    slug: 'windvista',
+    name: 'WindVista',
+    tag: 'Wind Analytics',
+    tagline: 'End-to-end wind energy intelligence.',
+    description:
+      'Centralises Shear, LTT, and WindexGraph analysis in one platform — cutting wind farm reporting time from days to hours. The operational backbone for large-scale wind asset management.',
+    icon: <Wind size={28} />,
+    accent: '#1A6B9A',
+    href: '/products/windvista',
+  },
+  {
+    slug: 'urai',
+    name: 'URAI',
+    tag: 'AI Chatbot',
+    tagline: 'Conversational AI for field operations.',
+    description:
+      'Answers operational questions in natural language — connecting field teams to critical data without a single spreadsheet. Purpose-built for engineering environments.',
+    icon: <Bot size={28} />,
+    accent: '#2D5F8A',
+    href: '/products/urai',
+  },
+  {
+    slug: 'aop',
+    name: 'AOP Basic & PRO',
+    tag: 'AI Planning',
+    tagline: 'Annual operating plans, simplified.',
+    description:
+      'Streamlines management and tracking of AI and business planning environments across Basic and PRO tiers — giving leadership a single, real-time dashboard.',
+    icon: <BarChart2 size={28} />,
+    accent: '#0F4C75',
+    href: '/products/aop',
+  },
+  {
+    slug: 'braid',
+    name: 'BRAID',
+    tag: 'AI Infrastructure',
+    tagline: 'Multi-agent AI backbone.',
+    description:
+      'Retrieval-augmented AI architecture for complex data workflows — enabling orchestrated, context-aware intelligence across enterprise systems and research pipelines.',
+    icon: <Network size={28} />,
+    accent: '#1B4F72',
+    href: '/products/braid',
+  },
+  {
+    slug: 'code2cognition',
+    name: 'CodeToCognition',
+    tag: 'AI Upskilling',
+    tagline: 'From code to applied AI.',
+    description:
+      'A structured AI upskilling academy offering practical, project-based training in machine learning and applied AI — built for students and corporate engineering teams alike.',
+    icon: <BookOpen size={28} />,
+    accent: '#154360',
+    href: '/products/code2cognition',
+  },
+  {
+    slug: 'ai-tutor',
+    name: 'AI Tutor',
+    tag: 'Education Platform',
+    tagline: 'Personalised AI-powered learning.',
+    description:
+      'Delivers adaptive, personalised AI and ML learning experiences — matching curriculum to each learner\'s pace and knowledge gaps for measurably better outcomes.',
+    icon: <GraduationCap size={28} />,
+    accent: '#1A5276',
+    href: '/products/ai-tutor',
+  },
+];
+
 const Products: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [isNavVisible, setIsNavVisible] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [searchParams] = useSearchParams();
-
-  // Sync category from URL query param (?cat=...)
-  useEffect(() => {
-    const cat = searchParams.get('cat');
-    if (cat) {
-      setActiveCategory(cat);
-    } else {
-      setActiveCategory('All');
-    }
-  }, [searchParams]);
-
-  // Scroll active tab into view
-  useEffect(() => {
-    if (activeCategory && scrollContainerRef.current) {
-      const activeTab = document.getElementById(`nav-tab-${activeCategory.replace(/\s+/g, '-')}`);
-      const container = scrollContainerRef.current;
-      if (activeTab && container) {
-        const scrollLeft = activeTab.offsetLeft - (container.offsetWidth / 2) + (activeTab.offsetWidth / 2);
-        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-      }
-    }
-  }, [activeCategory]);
-
-  // Sync nav visibility with main Navbar
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 200) {
-        setIsNavVisible(false);
-      } else if (currentScrollY < lastScrollY) {
-        setIsNavVisible(true);
-      }
-      lastScrollY = currentScrollY;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const productList: ProductItem[] = [
-    { slug: 'windvista-2', name: 'WindVista 2', category: 'Energy Analytics', shortDesc: 'Enhanced wind energy asset management platform centralising Shear, LTT, and WindexGraph for faster wind data analysis and reporting.' },
-    { slug: 'windvista-1', name: 'WindVista 1', category: 'Energy Analytics', shortDesc: 'Key platform for managing all wind energy assets and data. Covers site assessment, energy prediction, and operational management of wind farms.' },
-    { slug: 'batch-uploader', name: 'Batch Uploader', category: 'Energy Analytics', shortDesc: 'Tool for bulk data uploading and processing to support wind energy and geospatial data pipelines.' },
-    { slug: 'coordinate-plotter', name: 'Coordinate Plotter', category: 'Data Management', shortDesc: 'Geospatial mapping tool for plotting and visualising coordinate data, supporting real-time mapping and spatial analysis.' },
-    { slug: 'windbug', name: 'WindBug', category: 'Energy Analytics', shortDesc: 'Bug tracking and QA tool specific to wind energy software projects, supporting operational management of wind farms.' },
-    { slug: 'alerp', name: 'ALERP', category: 'Energy Analytics', shortDesc: 'ERP software that streamlines fabrication and industrial work for aluminium window manufacturers.' },
-    { slug: 'mdm', name: 'MDM', category: 'Data Management', shortDesc: 'Master Data Management platform for centralising and managing organisational data across systems.' },
-    { slug: 'slice-arrow', name: 'Slice Arrow', category: 'Artificial Intelligence', shortDesc: 'DevOps & AI Deployments platform — launch products faster with automated deployments, CI/CD pipelines, GPU infrastructure, and end-to-end AI model management.' },
-    { slug: 'canvas', name: 'Canvas', category: 'Data Management', shortDesc: 'General & Vertical Platform covering specialised needs including data visualisation, finance, research, and complex data analysis.' },
-    { slug: 'tgdex-discussion', name: 'TGDex Discussion', category: 'Education', shortDesc: 'Discussion Forum platform — dedicated space to foster a supportive learning and problem-solving community.' },
-    { slug: 'tgdex-competition', name: 'TGDex Competition', category: 'Education', shortDesc: 'Competition module under the TGDex education platform supporting online learning and engaging educational content.' },
-    { slug: 'ndvi-data-stories', name: 'NDVI Data Stories', category: 'Data Management', shortDesc: 'Data Stories application using data visualisation focused on NDVI for crop and plant health monitoring across India.' },
-    { slug: 'bangalore-data-stories', name: 'Bangalore Data Stories', category: 'Data Management', shortDesc: 'Data Stories Application for the Bangalore region using narrative techniques for urban planning and environmental analysis.' },
-    { slug: 'decomm', name: 'Decomm', category: 'Energy Analytics', shortDesc: 'Decommissioning management tool for tracking and managing wind farm or industrial asset decommissioning operations.' },
-    { slug: 'odisha-health-cdpg', name: 'Odisha Health CDPG', category: 'Data Management', shortDesc: 'Health data platform for Odisha region — data-driven health decision-making for public sector.' },
-    { slug: 'aop-basic-and-pro', name: 'AOP Basic & PRO', category: 'Artificial Intelligence', shortDesc: 'Annual Operating Plan tool in Basic and PRO tiers to simplify management and tracking of AI/business planning environments.' },
-    { slug: 'sumo', name: 'SUMO++', category: 'Software Platform', shortDesc: 'Enhanced version of the open-source SUMO application, extended with new features and a modernised user interface.' },
-    { slug: 'sirpis-attendance', name: "Sirpi's Attendance", category: 'Data Management', shortDesc: 'Internal attendance and field staff tracking system for SIRPI, supporting smart data management tools.' },
-    { slug: 'codetocognition', name: 'CodeToCognition', category: 'Education', shortDesc: 'AI Upskilling Academy platform offering practical AI/ML training for students and corporate teams.' },
-    { slug: 'cbr', name: 'CBR', category: 'Data Management', shortDesc: 'Case-Based Reasoning research platform for complex data analysis and research workflows.' },
-    { slug: 'cbr-data-curation', name: 'CBR – Data Curation', category: 'Data Management', shortDesc: 'Data curation sub-project under the CBR initiative, focusing on cleaning and managing datasets.' },
-    { slug: 'cbr-ai-challenge', name: 'CBR AI Challenge', category: 'Artificial Intelligence', shortDesc: 'AI challenge component of the CBR project to evaluate AI model performance on CBR datasets.' },
-    { slug: 'windex-graph-v2', name: 'Windex Graph V2', category: 'Energy Analytics', shortDesc: 'Version 2 of the WindexGraph tool for graphical analysis and visualisation of wind index data.' },
-    { slug: 'project-eagle', name: 'Project Eagle', category: 'Data Management', shortDesc: "Specialised data analysis project under SIRPI's General & Vertical Platforms domain." },
-    { slug: 'locomo', name: 'Locomo', category: 'Software Platform', shortDesc: 'Platform relating to logistics, location-based monitoring, or movement tracking applications.' },
-    { slug: 'dpi-factory', name: 'DPI Factory', category: 'Data Management', shortDesc: 'Data & Platform Infrastructure Factory for building and managing data pipelines and digital public infrastructure.' },
-    { slug: 'insta-post', name: 'Insta Post', category: 'Software Platform', shortDesc: 'Instagram post scheduling and management tool enabling automation and management of social media posts.' },
-    { slug: 'morpheus', name: 'Morpheus', category: 'Data Management', shortDesc: "AI/ML model deployment or data transformation tool under SIRPI's General & Vertical Platforms domain." },
-    { slug: 'neuberg', name: 'Neuberg', category: 'Data Management', shortDesc: 'Diagnostic or health data analytics platform in the healthcare sector.' },
-    { slug: 'braid', name: 'BRAID', category: 'Artificial Intelligence', shortDesc: "Multi-agent or retrieval-augmented AI backbone for complex data workflows under SIRPI's AI Infrastructure domain." },
-    { slug: 'ai-tutor', name: 'AI Tutor', category: 'Education', shortDesc: 'AI-powered tutoring platform delivering personalised AI/ML learning experiences for students.' },
-  ];
-
-  const categories = ['All', ...Array.from(new Set(productList.map(p => p.category)))];
-  const filtered = activeCategory === 'All' ? productList : productList.filter(p => p.category === activeCategory);
-
   return (
     <>
       <SEO
-        title="Proprietary Products Portfolio"
-        description="Discover our specialised software products: WindVista, URAI Chatbot, AI Upskilling Academy, OGC Map Server, and more."
+        title="Featured Products | SIRPI Technologies"
+        description="Explore SIRPI's flagship software products: WindVista, URAI, AOP, BRAID, CodeToCognition, and AI Tutor — purpose-built platforms for engineering and AI-driven industries."
       />
 
-      <div className="bg-[#f0f4fa]">
+      <div style={{ background: FROST }}>
 
         {/* ── PAGE HEADER ── */}
-        <section className="bg-[#021124] pt-32 pb-20 px-6 lg:px-12">
+        <section style={{ background: N }} className="pt-36 pb-24 px-6 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <p className="text-[#6eb4f7] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Product Matrix</p>
-            <h1 className="font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight max-w-3xl">
-              Proprietary<br />
-              <span className="text-[#6eb4f7]">Solutions</span>
-            </h1>
-            <p className="text-slate-300 text-base leading-relaxed mt-6 max-w-xl">
-              We compile our scientific findings and software routines into highly optimised, deployment-ready enterprise platforms.
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4" style={{ color: '#6eb4f7' }}>
+              Product Portfolio
             </p>
-            <div className="mt-4 text-slate-400 text-sm font-semibold">{productList.length} Products</div>
+            <h1
+              className="font-bold leading-tight max-w-3xl"
+              style={{
+                fontFamily: 'Georgia, serif',
+                fontSize: 'clamp(2.4rem, 6vw, 5rem)',
+                color: '#ffffff',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              Proprietary<br />
+              <span style={{ color: '#6eb4f7' }}>Platforms</span>
+            </h1>
+            <p className="text-base leading-relaxed mt-6 max-w-xl" style={{ color: 'rgba(255,255,255,0.65)' }}>
+              We compile our scientific findings and engineering routines into highly optimised,
+              deployment-ready enterprise platforms — each purpose-built for its domain.
+            </p>
           </div>
         </section>
 
-        {/* ── CATEGORY FILTER ── */}
-        <div 
-          className={`bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.05)] border-b border-[#e5e7eb] w-full z-40 transition-all duration-300 sticky ${isNavVisible ? 'top-[76px]' : 'top-0'}`}
-        >
-          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-            <div 
-              ref={scrollContainerRef}
-              className="flex overflow-x-auto w-full whitespace-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-            >
-              {categories.map(cat => {
-                const isActive = activeCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    id={`nav-tab-${cat.replace(/\s+/g, '-')}`}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`px-5 py-4 text-sm font-semibold transition-all duration-300 border-b-2 flex-shrink-0
-                      ${isActive 
-                        ? 'text-[#05325d] border-[#05325d] bg-slate-50' 
-                        : 'text-slate-500 border-transparent hover:text-[#05325d] hover:bg-slate-50'}`}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        {/* ── FEATURED PRODUCTS GRID ── */}
+        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {FEATURED.map((p) => (
+              <div
+                key={p.slug}
+                className="group rounded-2xl flex flex-col overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                style={{ background: '#ffffff', borderColor: 'rgba(0,46,93,0.1)' }}
+              >
+                {/* Top accent bar */}
+                <div className="h-1 w-full" style={{ background: p.accent }} />
 
-        {/* ── PRODUCT GRID — Image cards ── */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
-            {filtered.map((product, i) => (
-              <Card
-                key={i}
-                img={categoryImages[product.category] || categoryImages['Software Platform']}
-                title={product.name}
-                description={product.shortDesc}
-                tag={product.category}
-                link={`/products/${product.slug}`}
-                height="h-72"
-                gradient="strong"
-              />
+                <div className="p-8 flex flex-col flex-1">
+                  {/* Icon + Tag */}
+                  <div className="flex items-start justify-between mb-5">
+                    <div
+                      className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: `${p.accent}15`, color: p.accent }}
+                    >
+                      {p.icon}
+                    </div>
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                      style={{ color: INK, background: '#E8EEFB' }}
+                    >
+                      {p.tag}
+                    </span>
+                  </div>
+
+                  {/* Name */}
+                  <h2
+                    className="font-bold text-xl mb-1 leading-snug"
+                    style={{ fontFamily: 'Georgia, serif', color: N }}
+                  >
+                    {p.name}
+                  </h2>
+
+                  {/* Tagline */}
+                  <p className="text-sm font-semibold mb-3" style={{ color: p.accent }}>
+                    {p.tagline}
+                  </p>
+
+                  {/* Description */}
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: '#5a7a9f' }}>
+                    {p.description}
+                  </p>
+
+                  {/* CTA */}
+                  <Link
+                    to={p.href}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold mt-6 group-hover:gap-2.5 transition-all duration-200"
+                    style={{ color: N, textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                  >
+                    Learn More <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
             ))}
+          </div>
+        </section>
+
+        {/* ── BOTTOM CTA ── */}
+        <section className="py-16 border-t" style={{ borderColor: 'rgba(0,46,93,0.1)' }}>
+          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+              <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-2" style={{ color: INK, opacity: 0.5 }}>
+                Custom Solutions
+              </p>
+              <h3 className="font-bold text-xl" style={{ fontFamily: 'Georgia, serif', color: N }}>
+                Need something built for your domain?
+              </h3>
+              <p className="text-sm mt-1" style={{ color: '#5a7a9f' }}>
+                Our engineering team specialises in bespoke AI and geospatial systems.
+              </p>
+            </div>
+            <Link
+              to="/contact?type=demo"
+              className="inline-flex items-center gap-2 px-7 py-3.5 font-semibold text-sm rounded-lg transition-all hover:opacity-90 flex-shrink-0"
+              style={{ background: N, color: FROST }}
+            >
+              Start a Conversation <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </section>
 

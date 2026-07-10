@@ -22,6 +22,12 @@ import AdminDashboard from './pages/AdminDashboard';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 
+// Case study pages
+import WindVistaCaseStudy from './pages/case-studies/WindVista';
+import URAICaseStudy from './pages/case-studies/URAI';
+import AOPCaseStudy from './pages/case-studies/AOP';
+import AITutorCaseStudy from './pages/case-studies/AITutor';
+
 // Product pages
 import WindVistaPage from './pages/products/WindVista';
 import URAIPage from './pages/products/URAI';
@@ -71,6 +77,11 @@ const App: React.FC = () => {
               {/* Legacy slug catch-all */}
               <Route path="/products/:slug" element={<ProductDetails />} />
               <Route path="/industries" element={<Industries />} />
+              {/* Case study pages */}
+              <Route path="/case-studies/windvista" element={<WindVistaCaseStudy />} />
+              <Route path="/case-studies/urai" element={<URAICaseStudy />} />
+              <Route path="/case-studies/aop" element={<AOPCaseStudy />} />
+              <Route path="/case-studies/ai-tutor" element={<AITutorCaseStudy />} />
               <Route path="/search" element={<SearchResults />} />
               <Route path="/research" element={<Research />} />
               <Route path="/careers" element={<Careers />} />
