@@ -57,7 +57,7 @@ const AOPCaseStudy: React.FC = () => (
     <SEO title="AOP Case Study — Dynamic Wind Energy Forecasting | SIRPI Technologies" description="How SIRPI's AOP tool replaced spreadsheet-based annual planning with dynamic, data-driven forecasting for wind energy operators." />
 
     {/* 01 HERO — dark */}
-    <section style={{ background: DARK, paddingTop: "7rem", paddingBottom: "5rem" }}>
+    <section style={{ background: N, paddingTop: "7rem", paddingBottom: "5rem" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 3rem" }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 24 }}>
@@ -104,7 +104,7 @@ const AOPCaseStudy: React.FC = () => (
     </section>
 
     {/* 03 APPROACH — dark */}
-    <section style={{ background: DARK, padding: "5rem 3rem" }}>
+    <section style={{ background: N, padding: "5rem 3rem" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: FROST, marginBottom: 12 }}>OUR APPROACH</p>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: 36, fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 44, maxWidth: 580 }}>
@@ -142,7 +142,7 @@ const AOPCaseStudy: React.FC = () => (
     </section>
 
     {/* 05 RESULTS — dark — honest placeholder */}
-    <section style={{ background: DARK, padding: "5rem 3rem" }}>
+    <section style={{ background: N, padding: "5rem 3rem" }}>
       <div style={{ maxWidth: 520, margin: "0 auto", textAlign: "center" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: FROST, marginBottom: 16 }}>THE OUTCOME</p>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: 32, fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 20 }}>
@@ -169,7 +169,7 @@ const AOPCaseStudy: React.FC = () => (
     </section>
 
     {/* 07 CTA — dark */}
-    <section style={{ background: DARK, padding: "6rem 3rem" }}>
+    <section style={{ background: N, padding: "6rem 3rem" }}>
       <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: FROST, marginBottom: 16 }}>WORK WITH US</p>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 16 }}>
