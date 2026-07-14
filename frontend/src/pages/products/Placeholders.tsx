@@ -30,7 +30,7 @@ export const PlaceholderProductPage: React.FC<PlaceholderPageProps> = ({
     <SEO title={seoTitle} description={seoDesc} />
 
     {/* HERO */}
-    <section style={{ background: DARK, paddingTop: "7rem", paddingBottom: "5rem" }}>
+    <section style={{ background: N, paddingTop: "7rem", paddingBottom: "5rem" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 3rem" }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
 
@@ -54,14 +54,14 @@ export const PlaceholderProductPage: React.FC<PlaceholderPageProps> = ({
           Full product details in progress.
         </h2>
         <p style={{ fontSize: 14, color: BODY_LIGHT, lineHeight: 1.8, marginBottom: 36 }}>{content}</p>
-        <Link to="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: DARK, color: FROST, borderRadius: 6, fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
+        <Link to="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: N, color: FROST, borderRadius: 6, fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
           Start a Conversation <ArrowRight size={16} />
         </Link>
       </div>
     </section>
 
     {/* FINAL CTA */}
-    <section style={{ background: DARK, padding: "6rem 3rem" }}>
+    <section style={{ background: N, padding: "6rem 3rem" }}>
       <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 16 }}>
           Interested in learning more?

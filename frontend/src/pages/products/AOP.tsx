@@ -63,7 +63,7 @@ const AOPPage: React.FC = () => (
     />
 
     {/* 01 HERO */}
-    <section style={{ background: DARK, paddingTop: "7rem", paddingBottom: "5rem" }}>
+    <section style={{ background: N, paddingTop: "7rem", paddingBottom: "5rem" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 3rem" }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
 
@@ -105,7 +105,7 @@ const AOPPage: React.FC = () => (
     </section>
 
     {/* 03 KEY FEATURES */}
-    <section style={{ background: DARK, padding: "5rem 3rem" }}>
+    <section style={{ background: N, padding: "5rem 3rem" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: FROST, marginBottom: 12 }}>PLATFORM CAPABILITIES</p>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: 36, fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 44, maxWidth: 520 }}>
@@ -137,7 +137,7 @@ const AOPPage: React.FC = () => (
     </section>
 
     {/* 05 WHO IT'S FOR */}
-    <section style={{ background: DARK, padding: "5rem 3rem" }}>
+    <section style={{ background: N, padding: "5rem 3rem" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: 36, fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 44 }}>
           Built for wind energy operators and investors.
@@ -163,7 +163,7 @@ const AOPPage: React.FC = () => (
     </section>
 
     {/* 07 FINAL CTA */}
-    <section style={{ background: DARK, padding: "6rem 3rem" }}>
+    <section style={{ background: N, padding: "6rem 3rem" }}>
       <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 16 }}>
           Build your next AOP on real data.

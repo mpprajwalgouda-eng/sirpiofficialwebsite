@@ -49,7 +49,7 @@ const ProblemBlock = ({ headline, body, cards }: { headline: string, body: strin
 );
 
 const DeliverBlock = ({ headline, items }: { headline: string, items: string[] }) => (
-  <section style={{ background: INK, padding: "5rem 3rem" }}>
+  <section style={{ background: N, padding: "5rem 3rem" }}>
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <h2 style={{ fontFamily: "Georgia, serif", fontSize: 36, fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 44 }}>
         {headline}
@@ -100,7 +100,7 @@ const WindEnergy: React.FC = () => {
       />
 
       {/* ── HERO ── */}
-      <section style={{ background: INK, minHeight: 400, display: "flex", alignItems: "center", paddingTop: "6rem", position: "relative" }}>
+      <section style={{ background: N, minHeight: 400, display: "flex", alignItems: "center", paddingTop: "6rem", position: "relative" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 3rem 4rem 3rem", width: "100%" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
 
@@ -119,7 +119,7 @@ const WindEnergy: React.FC = () => {
       </section>
 
       {/* ── TABS NAVIGATION ── */}
-      <section style={{ background: INK, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <section style={{ background: N, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 3rem", display: "flex", gap: "2.5rem", overflowX: "auto" }}>
           {TABS.map((tab, i) => (
             <button
@@ -181,7 +181,7 @@ const WindEnergy: React.FC = () => {
                     Explore WindVista <ArrowRight size={16} />
                   </Link>
                 </div>
-                <div style={{ background: INK, borderRadius: 12, padding: "2rem", border: "0.5px solid rgba(240,244,250,0.12)", borderTop: "2px solid rgba(240,244,250,0.20)", boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}>
+                <div style={{ background: N, borderRadius: 12, padding: "2rem", border: "0.5px solid rgba(240,244,250,0.12)", borderTop: "2px solid rgba(240,244,250,0.20)", boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}>
                   <p style={{ fontSize: 11, color: FROST, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", background: "rgba(255,255,255,0.08)", border: "0.5px solid rgba(255,255,255,0.12)", display: "inline-block", padding: "4px 10px", borderRadius: 4, marginBottom: 20 }}>
                     WINDVISTA
                   </p>
@@ -265,7 +265,7 @@ const WindEnergy: React.FC = () => {
       </AnimatePresence>
 
       {/* ── FINAL CTA ── */}
-      <section style={{ background: INK, padding: "6rem 3rem" }}>
+      <section style={{ background: N, padding: "6rem 3rem" }}>
         <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, color: FROST, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 20 }}>
             Ready to connect your wind farm data?

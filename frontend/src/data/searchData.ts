@@ -11,252 +11,52 @@ export interface SearchItem {
 export const searchIndex: SearchItem[] = [
   // --- PRODUCTS ---
   {
-    id: "windvista-2",
-    path: "/products/windvista-2",
-    title: "WindVista 2",
+    id: "windvista",
+    path: "/products/windvista",
+    title: "WindVista",
     category: "Product",
-    description: "Enhanced wind energy asset management platform centralizing Shear, LTT, and WindexGraph with improved automation, advanced filters and streamlined navigation for faster wind data analysis and reporting.",
-    keywords: ["wind", "energy", "asset management", "shear", "ltt", "windexgraph", "data analysis", "reporting"]
+    description: "End-to-end wind energy intelligence platform. Centralises Shear, LTT, and WindexGraph analysis — cutting wind farm reporting time from days to hours.",
+    keywords: ["windvista", "wind", "energy", "shear", "ltt", "windexgraph", "asset management", "wind farm", "analytics"]
   },
   {
-    id: "windvista-1",
-    path: "/products/windvista-1",
-    title: "WindVista 1",
+    id: "urai",
+    path: "/products/urai",
+    title: "URAI",
     category: "Product",
-    description: "Key platform for managing all wind energy assets and data in one place. Covers site assessment, energy prediction, and operational management of wind farms.",
-    keywords: ["wind", "energy", "asset management", "site assessment", "energy prediction", "wind farms"]
+    description: "Conversational AI chatbot for field operations. Answers operational questions in natural language — connecting field teams to critical data without spreadsheets.",
+    keywords: ["urai", "chatbot", "ai", "conversational ai", "field operations", "natural language", "nlp", "llm"]
   },
   {
-    id: "batch-uploader",
-    path: "/products/batch-uploader",
-    title: "Batch Uploader",
+    id: "aop",
+    path: "/products/aop",
+    title: "AOP Basic & PRO",
     category: "Product",
-    description: "Tool for bulk data uploading and processing to support wind energy and geospatial data pipelines.",
-    keywords: ["bulk upload", "data processing", "wind energy", "geospatial", "pipelines"]
-  },
-  {
-    id: "coordinate-plotter",
-    path: "/products/coordinate-plotter",
-    title: "Coordinate Plotter",
-    category: "Product",
-    description: "Geospatial mapping tool for plotting and visualizing coordinate data, supporting real-time mapping and spatial analysis.",
-    keywords: ["geospatial", "mapping", "coordinate", "visualizing", "real-time", "spatial analysis"]
-  },
-  {
-    id: "windbug",
-    path: "/products/windbug",
-    title: "WindBug",
-    category: "Product",
-    description: "Bug tracking / QA tool specific to wind energy software projects, supporting operational management of wind farms.",
-    keywords: ["bug tracking", "qa", "wind energy", "software", "operational management"]
-  },
-  {
-    id: "alerp",
-    path: "/products/alerp",
-    title: "ALERP",
-    category: "Product",
-    description: "ERP software that streamlines fabrication and industrial work for aluminum window manufacturers. Part of Manufacturing, ERP & Operations domain.",
-    keywords: ["erp", "manufacturing", "fabrication", "industrial", "aluminum window", "operations"]
-  },
-  {
-    id: "mdm",
-    path: "/products/mdm",
-    title: "MDM",
-    category: "Product",
-    description: "Master Data Management platform for centralizing and managing organizational data across systems.",
-    keywords: ["mdm", "master data management", "centralizing", "organizational data"]
-  },
-  {
-    id: "slice-arrow",
-    path: "/products/slice-arrow",
-    title: "Slice Arrow",
-    category: "Product",
-    description: "DevOps & AI Deployments platform — launch products faster with automated deployments, CI/CD pipelines, GPU infrastructure, and end-to-end AI model management. 50+ applications deployed, 99% uptime guarantee.",
-    keywords: ["devops", "ai deployment", "ci/cd", "gpu", "infrastructure", "ai model management"]
-  },
-  {
-    id: "canvas",
-    path: "/products/canvas",
-    title: "Canvas",
-    category: "Product",
-    description: "General & Vertical Platform covering specialized needs including data visualization, finance, research, and complex data analysis.",
-    keywords: ["platform", "data visualization", "finance", "research", "data analysis"]
-  },
-  {
-    id: "tgdex-discussion",
-    path: "/products/tgdex-discussion",
-    title: "TGDex Discussion",
-    category: "Product",
-    description: "Discussion Forum platform — dedicated space to foster a supportive learning and problem-solving community. Part of Education & Community Platforms domain.",
-    keywords: ["discussion forum", "learning", "community", "education", "problem-solving"]
-  },
-  {
-    id: "tgdex-competition",
-    path: "/products/tgdex-competition",
-    title: "TGDex Competition",
-    category: "Product",
-    description: "Competition module under the TGDex education platform supporting online learning and engaging educational content. Part of Education & Community Platforms domain.",
-    keywords: ["competition", "education", "online learning", "educational content"]
-  },
-  {
-    id: "ndvi-data-stories",
-    path: "/products/ndvi-data-stories",
-    title: "NDVI Data Stories",
-    category: "Product",
-    description: "Data Stories application using data visualization and narrative techniques, focused on NDVI (Normalized Difference Vegetation Index) for crop and plant health monitoring across India.",
-    keywords: ["data stories", "visualization", "ndvi", "crop", "plant health", "monitoring", "india"]
-  },
-  {
-    id: "bangalore-data-stories",
-    path: "/products/bangalore-data-stories",
-    title: "Bangalore Data Stories",
-    category: "Product",
-    description: "Data Stories Application for the Bangalore region using data visualization and narrative techniques to drive understanding and decisions in urban planning or environmental analysis.",
-    keywords: ["data stories", "bangalore", "visualization", "urban planning", "environmental analysis"]
-  },
-  {
-    id: "decomm",
-    path: "/products/decomm",
-    title: "Decomm",
-    category: "Product",
-    description: "Decommissioning management tool for tracking and managing wind farm or industrial asset decommissioning operations.",
-    keywords: ["decommissioning", "management tool", "wind farm", "industrial asset", "operations"]
-  },
-  {
-    id: "odisha-health-cdpg",
-    path: "/products/odisha-health-cdpg",
-    title: "Odisha Health CDPG",
-    category: "Product",
-    description: "Health data platform for Odisha region. CDPG (Community Data Platform for Governance) — data-driven health decision-making for public sector.",
-    keywords: ["health data", "odisha", "cdpg", "governance", "public sector"]
-  },
-  {
-    id: "aop-basic-and-pro",
-    path: "/products/aop-basic-and-pro",
-    title: "AOP Basic and PRO",
-    category: "Product",
-    description: "Annual Operating Plan tool in Basic and PRO tiers. AI Infrastructure & LLM tooling to simplify management and tracking of AI/business planning environments.",
-    keywords: ["aop", "annual operating plan", "ai infrastructure", "llm", "business planning"]
-  },
-  {
-    id: "sumo-plus-plus",
-    path: "/products/sumo-plus-plus",
-    title: "SUMO++",
-    category: "Product",
-    description: "SUMO++ is an enhanced version of the open-source SUMO application, built by leveraging the existing codebase and extending it with new features, improved functionality, and a modernized user interface.",
-    keywords: ["sumo", "sumo++", "open-source", "application", "ui"]
-  },
-  {
-    id: "sirpis-attendance",
-    path: "/products/sirpis-attendance",
-    title: "Sirpi's Attendance",
-    category: "Product",
-    description: "Internal attendance and field staff tracking system for SIRPI. Supports managing field staff with smart data tools.",
-    keywords: ["attendance", "field staff tracking", "internal", "smart data tools"]
-  },
-  {
-    id: "codetocognition",
-    path: "/products/codetocognition",
-    title: "CodeToCognition",
-    category: "Product",
-    description: "AI Upskilling Academy platform. Offers practical AI/ML training for students and corporate teams, connecting academia with real-world applications in Wind Energy, Telecom, and Geospatial Engineering.",
-    keywords: ["ai upskilling", "academy", "training", "machine learning", "wind energy", "telecom", "geospatial"]
-  },
-  {
-    id: "cbr",
-    path: "/products/cbr",
-    title: "CBR",
-    category: "Product",
-    description: "Case-Based Reasoning research platform under SIRPI's General & Vertical domain for complex data analysis and research workflows.",
-    keywords: ["cbr", "case-based reasoning", "research platform", "data analysis", "workflows"]
-  },
-  {
-    id: "cbr-data-curation",
-    path: "/products/cbr-data-curation",
-    title: "CBR – Data Curation",
-    category: "Product",
-    description: "Data curation sub-project under the CBR initiative. Focuses on cleaning, organizing, and managing datasets for case-based reasoning and research applications.",
-    keywords: ["data curation", "cbr", "cleaning", "organizing", "datasets"]
-  },
-  {
-    id: "cbr-ai-challenge",
-    path: "/products/cbr-ai-challenge",
-    title: "CBR AI Challenge",
-    category: "Product",
-    description: "AI challenge component of the CBR project, likely an internal or client-facing competition/benchmark to evaluate AI model performance on CBR datasets.",
-    keywords: ["ai challenge", "cbr", "competition", "benchmark", "ai model performance"]
-  },
-  {
-    id: "windex-graph-v2",
-    path: "/products/windex-graph-v2",
-    title: "Windex Graph V2",
-    category: "Product",
-    description: "Version 2 of the WindexGraph tool — part of the WindVista wind energy platform. Used for graphical analysis and visualization of wind index data for energy prediction.",
-    keywords: ["windex graph", "windvista", "wind energy", "graphical analysis", "visualization", "energy prediction"]
-  },
-  {
-    id: "project-eagle",
-    path: "/products/project-eagle",
-    title: "Project Eagle",
-    category: "Product",
-    description: "Internal or client project under SIRPI's General & Vertical Platforms domain. Covers specialized data analysis needs.",
-    keywords: ["project eagle", "internal project", "data analysis"]
-  },
-  {
-    id: "locomo",
-    path: "/products/locomo",
-    title: "Locomo",
-    category: "Product",
-    description: "Platform under SIRPI's General & Vertical domain. May relate to logistics, location-based monitoring, or movement tracking applications.",
-    keywords: ["locomo", "logistics", "location-based monitoring", "movement tracking"]
-  },
-  {
-    id: "dpi-factory",
-    path: "/products/dpi-factory",
-    title: "DPI Factory",
-    category: "Product",
-    description: "DPI (Data & Platform Infrastructure) Factory — likely an internal tooling or infrastructure platform for building and managing data pipelines and digital public infrastructure.",
-    keywords: ["dpi factory", "data infrastructure", "platform infrastructure", "data pipelines", "digital public infrastructure"]
-  },
-  {
-    id: "insta-post",
-    path: "/products/insta-post",
-    title: "Insta Post",
-    category: "Product",
-    description: "Instagram post scheduling and management tool (InstaPost Scheduler). Enables scheduling, automating, and managing social media posts on Instagram.",
-    keywords: ["insta post", "instagram", "post scheduling", "social media", "management tool"]
-  },
-  {
-    id: "morpheus",
-    path: "/products/morpheus",
-    title: "Morpheus",
-    category: "Product",
-    description: "Platform under SIRPI's General & Vertical Platforms domain. Likely an AI/ML model deployment or data transformation tool.",
-    keywords: ["morpheus", "ai deployment", "ml model", "data transformation"]
-  },
-  {
-    id: "neuberg",
-    path: "/products/neuberg",
-    title: "Neuberg",
-    category: "Product",
-    description: "Project under SIRPI's domain — possibly a diagnostic or health data analytics platform. Neuberg is a diagnostics brand, suggesting a health-sector engagement.",
-    keywords: ["neuberg", "diagnostic", "health data", "analytics"]
+    description: "Annual Operating Plan tool in Basic and PRO tiers. Simplifies management and tracking of AI and business planning environments with a real-time leadership dashboard.",
+    keywords: ["aop", "annual operating plan", "ai planning", "business planning", "dashboard", "basic", "pro"]
   },
   {
     id: "braid",
     path: "/products/braid",
     title: "BRAID",
     category: "Product",
-    description: "BRAID platform under SIRPI's AI Infrastructure & LLM Tools domain. Likely a multi-agent or retrieval-augmented AI backbone for complex data workflows.",
-    keywords: ["braid", "ai infrastructure", "llm tools", "multi-agent", "rag", "data workflows", "ai"]
+    description: "Multi-agent retrieval-augmented AI backbone for complex data workflows — enabling orchestrated, context-aware intelligence across enterprise systems and research pipelines.",
+    keywords: ["braid", "ai infrastructure", "llm", "multi-agent", "rag", "retrieval augmented", "data workflows", "ai"]
+  },
+  {
+    id: "code2cognition",
+    path: "/products/code2cognition",
+    title: "CodeToCognition",
+    category: "Product",
+    description: "AI upskilling academy offering practical, project-based training in machine learning and applied AI — built for students and corporate engineering teams.",
+    keywords: ["codetocognition", "code2cognition", "ai upskilling", "academy", "training", "machine learning", "education", "corporate"]
   },
   {
     id: "ai-tutor",
     path: "/products/ai-tutor",
     title: "AI Tutor",
     category: "Product",
-    description: "AI-powered tutoring platform under Education & Community Platforms domain. Connected to Sirpi's Code2Cognition academy — delivers personalized AI/ML learning experiences for students.",
-    keywords: ["ai tutor", "education", "tutoring", "ai learning", "ml learning", "students"]
+    description: "AI-powered tutoring platform delivering adaptive, personalised AI and ML learning experiences matched to each learner's pace and knowledge gaps.",
+    keywords: ["ai tutor", "education", "tutoring", "personalised learning", "ai learning", "ml", "students", "adaptive"]
   },
 
   // --- SERVICES ---
